@@ -41,15 +41,15 @@ export function Navbar() {
         </div>
 
         {/* Center: Absolutely Positioned Logo */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
+        <div className="absolute bg-transparent left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
           {/* pointer-events-none on wrapper to allow clicks to pass through if needed, re-enable on Link */}
-          <Link href="/" className="pointer-events-auto block bg-brand-primary p-2 rounded-full">
+          <Link href="/" className="pointer-events-auto block  p-2 rounded-full">
             <Image 
               src="/imgs/logo.png" 
               alt="Logo" 
               width={100} 
               height={100} 
-              className="w-20 h-auto object-contain"
+              className="w-30 h-auto object-contain"
               priority
             />
           </Link>

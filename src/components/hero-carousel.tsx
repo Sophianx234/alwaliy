@@ -12,13 +12,18 @@ const slides = [
     image: "/imgs/h-1.jpeg",
   },
   {
-    id: 1,
-    image: "/imgs/h-2.jpeg",
+    id: 2,
+    image: "/imgs/h-1.jpeg",
   },
   {
-    id: 1,
-    image: "/imgs/h-3.jpeg",
+    id: 3,
+    image: "/imgs/h-4.jpeg",
   },
+  {
+    id: 4,
+    image: "/imgs/h-2.jpeg",
+  },
+  
   /* 
   title: "Elevate Your Journey",
   description: "Discover a curated collection of courses and profound recitations designed to enrich your mind and soul.",
