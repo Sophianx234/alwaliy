@@ -185,7 +185,7 @@ export function AudioPlayer() {
         className="pointer-events-auto w-full relative bg-[#051810]/95 backdrop-blur-3xl border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.3)]"
         initial={false}
         animate={{
-          clipPath: isExpanded ? "inset(0% 0% 0% 0%)" : "inset(0% 100% 0% 0%)",
+          clipPath: isExpanded ? "inset(-1000px 0px 0px 0px)" : "inset(-1000px 100% 0px 0px)",
           opacity: isExpanded ? 1 : 0,
           paddingTop: isScrolled ? "12px" : "24px",
           paddingBottom: isScrolled ? "12px" : "24px",
