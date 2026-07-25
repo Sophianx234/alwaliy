@@ -1,58 +1,70 @@
-import { BookOpen, Star, Feather, Book, Compass, Languages, ArrowRight } from "lucide-react";
+import { Play, PlayCircle, Clock, BarChart2, ArrowRight } from "lucide-react";
 
 const courses = [
   {
-    title: "Quran Memorization",
-    subtitle: "Hifz Program",
-    description: "Embark on a sacred journey to memorize the Holy Quran with precise Tajweed and personalized guidance.",
-    icon: BookOpen,
-    level: "All Levels",
-    duration: "Ongoing",
+    category: "Quranic Studies",
+    title: "Basic Fundamentals of Quran Memorization",
+    price: "$25.00",
+    lessons: "5 Lessons",
+    hours: "3h 30m",
+    level: "Beginner",
+    instructor: "Imam Ahmad",
+    instructorImage: "/imgs/h-2.jpeg",
     image: "/imgs/h-1.jpeg"
   },
   {
-    title: "Hadith Studies",
-    subtitle: "Prophetic Traditions",
-    description: "Delve deep into the sayings and traditions of Prophet Muhammad (ﷺ), understanding their context and application.",
-    icon: Feather,
+    category: "Prophetic Traditions",
+    title: "Understanding Context in Hadith Studies",
+    price: "Free",
+    lessons: "12 Lessons",
+    hours: "8h 15m",
     level: "Intermediate",
-    duration: "6 Months",
+    instructor: "Dr. Fatima S.",
+    instructorImage: "/imgs/h-3.jpeg",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Seerah",
-    subtitle: "Prophetic Biography",
-    description: "Learn the inspiring life story, struggles, and profound character of the Prophet (ﷺ) to derive timeless lessons.",
-    icon: Compass,
+    category: "History",
+    title: "Life and Struggles of the Prophet (ﷺ)",
+    price: "$45.00",
+    lessons: "24 Lessons",
+    hours: "16h 00m",
     level: "Beginner",
-    duration: "12 Weeks",
+    instructor: "Imam Omar K.",
+    instructorImage: "/imgs/h-4.jpeg",
     image: "/imgs/h-3.jpeg"
   },
   {
-    title: "Aqeedah",
-    subtitle: "Islamic Creed",
-    description: "Strengthen your foundational beliefs and gain a crystal-clear understanding of core Islamic theology.",
-    icon: Star,
+    category: "Theology",
+    title: "Foundations of Islamic Creed (Aqeedah)",
+    price: "Free",
+    lessons: "8 Lessons",
+    hours: "4h 30m",
     level: "Beginner",
-    duration: "8 Weeks",
+    instructor: "Shaykh Zaid T.",
+    instructorImage: "/imgs/h-5.jpeg",
     image: "/imgs/h-4.jpeg"
   },
   {
-    title: "Tajweed Mastery",
-    subtitle: "Perfect Recitation",
-    description: "Refine your recitation through the detailed study of articulation points and pronunciation rules.",
-    icon: Book,
+    category: "Quranic Studies",
+    title: "Advanced Rules of Tajweed Mastery",
+    price: "$60.00",
+    lessons: "32 Lessons",
+    hours: "24h 00m",
     level: "Advanced",
-    duration: "10 Weeks",
+    instructor: "Shaykh Ahmad",
+    instructorImage: "/imgs/h-2.jpeg",
     image: "/imgs/h-5.jpeg"
   },
   {
-    title: "Arabic Language",
-    subtitle: "Quranic Arabic",
-    description: "Unlock the language of the Quran and deepen your direct connection with classical Islamic texts.",
-    icon: Languages,
+    category: "Language",
+    title: "Comprehensive Classical Arabic Grammar",
+    price: "$85.00",
+    lessons: "40 Lessons",
+    hours: "30h 45m",
     level: "All Levels",
-    duration: "1 Year",
+    instructor: "Dr. Aisha M.",
+    instructorImage: "/imgs/h-3.jpeg",
     image: "/imgs/h-5x.jpeg"
   }
 ];
@@ -63,96 +75,97 @@ export function CoursesSection() {
       <div className="max-w-[1400px] mx-auto flex flex-col space-y-16">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row  md:items-end justify-center gap-8">
-          <div className="flex flex-col text-center space-y-4 max-w-2xl">
-            {/* <h4 className="text-brand-accent font-sans font-bold tracking-[0.2em] uppercase text-xs">
-              Academic Excellence
-            </h4> */}
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-brand-darkest tracking-tight">
-              Available Courses
-            </h2>
-            
-          </div>
+        <div className="flex flex-col text-center space-y-4 max-w-2xl mx-auto mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#1D1D21] tracking-tight">
+            Available Courses
+          </h2>
           
-          {/* <button className="hidden md:flex items-center gap-3 px-8 py-4 bg-brand-darkest text-brand-text-light font-bold uppercase tracking-widest text-sm rounded-lg hover:bg-brand-accent hover:text-white transition-colors shadow-xl">
-            View Schedule
-          </button> */}
         </div>
 
         {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course, i) => {
-            const Icon = course.icon;
             return (
               <div 
                 key={i}
-                className="group bg-white rounded-lg border border-brand-primary/5   transition-all duration-500  flex flex-col h-full relative overflow-hidden cursor-pointer"
+                className="bg-white rounded-[24px] p-5 border border-[#F1F1F3] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col cursor-pointer group"
               >
-                {/* Image Container */}
-                <div className="relative w-full h-56 md:h-64 overflow-hidden bg-brand-primary/5">
+                {/* Top Image Box */}
+                <div className="relative w-full h-56 bg-[#F3F4F6] rounded-[16px] overflow-hidden flex items-center justify-center mb-5">
                   <img 
                     src={course.image} 
                     alt={course.title} 
-                    className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out " 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
                   />
                   
-                  {/* Subtle Image Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-14 h-14 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-6 h-6 text-[#1D1D21] ml-1.5" fill="currentColor" />
+                    </div>
+                  </div>
 
-                  {/* Floating Level Badge */}
-                  <div className="absolute top-5 left-5">
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-brand-darkest px-4 py-2 bg-white/95 backdrop-blur-md rounded-full shadow-lg">
-                      {course.level}
+                  
+                </div>
+
+                {/* Price */}
+                <div className="text-black font-bold text-[22px] mb-3">
+                  {course.price}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-[#1D1D21] text-lg font-bold leading-[1.3] mb-5">
+                  {course.title}
+                </h3>
+
+                {/* Meta Data */}
+                <div className="flex flex-wrap items-center gap-5 text-[#808080] text-[14px] mb-6 font-medium">
+                  {/* Category Badge */}
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-purple-500 h-32 text-[12px] font-bold px-3 py-1.5 rounded-lg tracking-wide">
+                      {course.category}
                     </span>
                   </div>
-                </div>
-
-                {/* Content Container */}
-                <div className="p-8 flex flex-col flex-grow bg-white z-0">
-                  
-                  {/* Top Row: Duration Badge & Icon */}
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="pt-2">
-                       <span className="text-[10px] font-bold tracking-widest uppercase text-brand-accent px-3 py-1 bg-brand-accent/10 rounded-full inline-block">
-                         {course.duration}
-                       </span>
-                    </div>
-                    
-                    {/* Icon */}
-                    <div className="w-14 h-14 rounded-lg bg-brand-primary/5 flex items-center justify-center text-brand-primary   transition-colors duration-500">
-                      <Icon className="w-6 h-6" />
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <PlayCircle className="w-[18px] h-[18px]" />
+                    <span>{course.lessons}</span>
                   </div>
-
-                  {/* Titles */}
-                  <h3 className="text-2xl font-serif font-bold text-brand-darkest mb-1 group-hover:text-brand-accent transition-colors duration-300">
-                    {course.title}
-                  </h3>
-                  <h4 className="text-xs font-sans font-bold text-brand-primary/40 mb-4 uppercase tracking-[0.15em]">
-                    {course.subtitle}
-                  </h4>
-                  
-                  {/* Description */}
-                  <p className="text-brand-primary/80 leading-relaxed flex-grow text-sm md:text-base">
-                    {course.description}
-                  </p>
-
-                  {/* Action Link */}
-                  <div className="mt-8 pt-6 border-t border-brand-primary/5 flex items-center justify-between text-brand-primary font-bold text-sm tracking-widest uppercase group-hover:text-brand-accent transition-colors">
-                    <span>Explore Course</span>
-                    <div className="w-10 h-10 rounded-full bg-brand-primary/5 flex items-center justify-center group-hover:bg-brand-accent/10 transition-colors">
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-[18px] h-[18px]" />
+                    <span>{course.hours}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <BarChart2 className="w-[18px] h-[18px]" />
+                    <span>{course.level}</span>
                   </div>
                 </div>
+                
+
+                {/* Divider */}
+                <div className="border-t border-[#F1F1F3] w-full mt-auto mb-5"></div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between">
+                  {/* Instructor */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-[#F3F4F6] border border-[#F1F1F3]">
+                      <img src={course.instructorImage} alt={course.instructor} className="w-full h-full object-cover" />
+                    </div>
+                    <span className="font-bold text-[#1D1D21] text-[15px]">
+                      {course.instructor}
+                    </span>
+                  </div>
+                  
+                  {/* Action */}
+                  <div className="text-[#1D1D21] font-bold text-[15px] flex items-center gap-1.5  transition-colors">
+                    Enroll Now <ArrowRight className="w-[18px] h-[18px] group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
               </div>
             );
           })}
         </div>
-        
-        <button className="flex md:hidden items-center justify-center gap-3 px-8 py-4 bg-brand-darkest text-brand-text-light font-bold uppercase tracking-widest text-sm rounded-lg hover:bg-brand-accent hover:text-white transition-colors shadow-xl w-full">
-          View Schedule
-        </button>
 
       </div>
     </section>

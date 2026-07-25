@@ -7,6 +7,8 @@ import { SecondaryBanner } from "@/components/secondary-banner";
 import { FeaturedRecitation } from "@/components/featured-recitation";
 import { GallerySection } from "@/components/gallery-section";
 import { CoursesSection } from "@/components/courses-section";
+import { TestimonialSection } from "@/components/testimonials-section";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -20,6 +22,8 @@ export default function Home() {
       <FeaturedRecitation/>
       <GallerySection/>
       <CoursesSection/>
+      <TestimonialSection/>
+      <Footer/>
       </main>
   );
 }
