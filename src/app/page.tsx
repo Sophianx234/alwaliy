@@ -1,6 +1,8 @@
 import Banner from "@/components/banner";
+import BannerMosque from "@/components/banner-mosque";
 import { FeaturesGrid } from "@/components/features-grid";
 import { HeroCarousel } from "@/components/hero-carousel";
+import { AboutSection } from "@/components/about-section";
 
 export default function Home() {
   return (
@@ -8,6 +10,8 @@ export default function Home() {
       <HeroCarousel/>
       <Banner/>
       <FeaturesGrid/>
+      <BannerMosque/>
+      <AboutSection/>
       </main>
   );
 }
