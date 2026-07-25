@@ -5,6 +5,7 @@ import { HeroCarousel } from "@/components/hero-carousel";
 import { AboutSection } from "@/components/about-section";
 import { SecondaryBanner } from "@/components/secondary-banner";
 import { FeaturedRecitation } from "@/components/featured-recitation";
+import { GallerySection } from "@/components/gallery-section";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <AboutSection/>
       <SecondaryBanner/>
       <FeaturedRecitation/>
+      <GallerySection/>
       </main>
   );
 }
