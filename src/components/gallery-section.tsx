@@ -31,7 +31,7 @@ export function GallerySection() {
             fill 
             className="object-cover object-[center_93%]  opacity-75 pointer-events-none" 
           />
-          {/* <div className="absolute bottom-5 z-10   font-serif text-4xl font-bold">Gallery</div> */}
+          <div className="absolute bottom-5 z-10   font-serif text-2xl font-bold">Gallery</div>
 
         </div>
       </div>

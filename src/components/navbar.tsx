@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -27,15 +27,46 @@ const YoutubeIcon = ({ className }: { className?: string }) => (
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const isMenuOpenRef = useRef(isMobileMenuOpen);
   const { scrollY } = useScroll();
 
+  // Keep ref in sync so the scroll event always knows if menu is open
+  useEffect(() => {
+    isMenuOpenRef.current = isMobileMenuOpen;
+    if (isMobileMenuOpen) {
+      setIsVisible(true);
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    }
+  }, [isMobileMenuOpen]);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 50) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
+    setIsScrolled(latest > 50);
+
+    // Clear existing hide timeout whenever scrolling happens
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+    }
+
+    // Always show navbar immediately when scrolling
+    setIsVisible(true);
+
+    // If we are scrolled down and menu is NOT open, set a timer to hide the navbar
+    if (latest > 50 && !isMenuOpenRef.current) {
+      scrollTimeout.current = setTimeout(() => {
+        setIsVisible(false);
+      }, 2500); // Hides after 2.5 seconds of no scrolling
     }
   });
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full flex justify-center pointer-events-none h-[80px] lg:h-[90px]">
@@ -43,7 +74,8 @@ export function Navbar() {
         initial={false}
         animate={{
           width: isScrolled ? "calc(100% - 2rem)" : "100%",
-          y: isScrolled ? 16 : 0,
+          y: !isVisible ? -120 : (isScrolled ? 16 : 0),
+          opacity: !isVisible ? 0 : 1,
           borderRadius: isScrolled ? 24 : 0,
           backgroundColor: isScrolled ? "rgba(5, 24, 16, 0.85)" : "rgba(5, 24, 16, 1)",
           backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",

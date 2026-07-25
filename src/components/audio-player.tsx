@@ -168,13 +168,13 @@ export function AudioPlayer() {
             exit={{ opacity: 0, x: -50, scale: 0.5 }}
             transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
             onClick={() => setIsExpanded(true)}
-            className="pointer-events-auto absolute bottom-6 left-6 p-4 bg-brand-accent text-brand-darkest rounded-full shadow-[0_10px_30px_rgba(200,138,88,0.4)] border border-white/20 hover:scale-105 active:scale-95 transition-transform z-50 group"
+            className="pointer-events-auto absolute bottom-6 left-6 p-4 bg-brand-accent text-brand-darkest rounded-full  border border-white/20 hover:scale-105 active:scale-95 transition-transform z-50 group"
             title="Expand Player"
           >
             {isPlaying ? (
-              <Disc className="w-7 h-7 animate-[spin_3s_linear_infinite]" />
+              <Disc className="w-4 h-4 animate-[spin_3s_linear_infinite]" />
             ) : (
-              <Play className="w-7 h-7 ml-1" />
+              <Play className="w-4 h-4 " />
             )}
           </motion.button>
         )}
@@ -265,7 +265,7 @@ export function AudioPlayer() {
                   height: isScrolled ? 44 : 56,
                 }}
                 transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                className="flex items-center justify-center bg-white text-brand-darkest rounded-full shadow-[0_4px_15px_rgba(255,255,255,0.15)] group"
+                className="flex items-center justify-center bg-white text-brand-darkest rounded-full  group"
               >
                 <div className="group-hover:scale-105 group-active:scale-95 transition-transform flex items-center justify-center w-full h-full">
                   {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" /> : <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />}
