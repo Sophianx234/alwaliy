@@ -9,10 +9,11 @@ import { GallerySection } from "@/components/gallery-section";
 import { CoursesSection } from "@/components/courses-section";
 import { TestimonialSection } from "@/components/testimonials-section";
 import { Footer } from "@/components/footer";
+import { AudioPlayer } from "@/components/audio-player";
 
 export default function Home() {
   return (
-      <main>
+      <main className="pb-[90px]">
       <HeroCarousel/>
       <Banner/>
       <FeaturesGrid/>
@@ -24,6 +25,7 @@ export default function Home() {
       <CoursesSection/>
       <TestimonialSection/>
       <Footer/>
+      <AudioPlayer/>
       </main>
   );
 }
