@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import WaveSurfer from "wavesurfer.js";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, ListMusic, Shuffle, Repeat } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, ListMusic, Shuffle, Repeat, X, Disc } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
 const PLAYLIST = [
   {
@@ -32,6 +33,14 @@ export function AudioPlayer() {
   const [isRepeat, setIsRepeat] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
+  
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 50);
+  });
 
   const track = PLAYLIST[currentTrackIndex];
 
@@ -71,11 +80,9 @@ export function AudioPlayer() {
     };
   }, []);
 
-  // Load new track when index changes
   useEffect(() => {
     const ws = waveSurferRef.current;
     if (ws) {
-      // Append ?play=1 to bypass aggressive download managers like IDM that intercept .mp3 extensions
       const bypassUrl = `${PLAYLIST[currentTrackIndex].url}?play=1`;
       ws.load(bypassUrl);
       if (isPlaying) {
@@ -86,7 +93,6 @@ export function AudioPlayer() {
     }
   }, [currentTrackIndex]);
 
-  // Handle track finish
   const handleNext = useCallback(() => {
     if (isShuffle) {
       let nextIndex = Math.floor(Math.random() * PLAYLIST.length);
@@ -146,120 +152,143 @@ export function AudioPlayer() {
 
   const selectTrack = (index: number) => {
     setCurrentTrackIndex(index);
-    setIsPlaying(true); // Auto-play when selecting a track from the list
-    setShowPlaylist(false); // Close playlist menu
+    setIsPlaying(true);
+    setShowPlaylist(false);
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full z-50">
+    <div className="fixed bottom-0 left-0 w-full z-50 pointer-events-none flex items-end">
       
-      {/* Playlist Popover */}
-      {showPlaylist && (
-        <div className="absolute bottom-[100%] right-4 md:right-8 mb-4 w-72 md:w-80 bg-[#051810]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 transform transition-all">
-          <div className="p-4 border-b border-white/10">
-            <h3 className="text-white font-bold tracking-widest uppercase text-xs">Up Next</h3>
-          </div>
-          <div className="max-h-64 overflow-y-auto">
-            {PLAYLIST.map((item, idx) => (
-              <div 
-                key={idx} 
-                onClick={() => selectTrack(idx)}
-                className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-white/5 transition-colors ${currentTrackIndex === idx ? 'bg-white/5 border-l-2 border-brand-accent' : ''}`}
-              >
-                <div className="w-10 h-10 rounded-md overflow-hidden bg-white/10 flex-shrink-0">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <h4 className={`text-sm font-bold truncate ${currentTrackIndex === idx ? 'text-brand-accent' : 'text-white'}`}>
-                    {item.title}
-                  </h4>
-                  <p className="text-white/50 text-xs truncate">{item.artist}</p>
-                </div>
-                {currentTrackIndex === idx && isPlaying && (
-                  <div className="ml-auto">
-                    <ListMusic className="w-4 h-4 text-brand-accent animate-pulse" />
-                  </div>
-                )}
+      {/* Floating Mini Player Button (Shows when collapsed) */}
+      <AnimatePresence>
+        {!isExpanded && (
+          <motion.button
+            initial={{ opacity: 0, x: -50, scale: 0.5 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -50, scale: 0.5 }}
+            transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
+            onClick={() => setIsExpanded(true)}
+            className="pointer-events-auto absolute bottom-6 left-6 p-4 bg-brand-accent text-brand-darkest rounded-full shadow-[0_10px_30px_rgba(200,138,88,0.4)] border border-white/20 hover:scale-105 active:scale-95 transition-transform z-50 group"
+            title="Expand Player"
+          >
+            {isPlaying ? (
+              <Disc className="w-7 h-7 animate-[spin_3s_linear_infinite]" />
+            ) : (
+              <Play className="w-7 h-7 ml-1" />
+            )}
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Main Expanded Player (Uses clipping mask to hide/show without unmounting) */}
+      <motion.div
+        className="pointer-events-auto w-full relative bg-[#051810]/95 backdrop-blur-3xl border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.3)]"
+        initial={false}
+        animate={{
+          clipPath: isExpanded ? "inset(0% 0% 0% 0%)" : "inset(0% 100% 0% 0%)",
+          opacity: isExpanded ? 1 : 0,
+          paddingTop: isScrolled ? "12px" : "24px",
+          paddingBottom: isScrolled ? "12px" : "24px",
+        }}
+        transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+      >
+        <div className="w-full px-4 md:px-8">
+          
+          {/* Close Button */}
+          <button 
+            onClick={() => setIsExpanded(false)}
+            className="absolute top-2 right-2 md:right-4 w-7 h-7 bg-white/5 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors z-50"
+            title="Collapse Player"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          
+          {/* Playlist Popover */}
+          {showPlaylist && (
+            <div className="absolute bottom-[100%] right-4 md:right-8 mb-4 w-72 md:w-80 bg-[#051810]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 transform transition-all">
+              <div className="p-4 border-b border-white/10">
+                <h3 className="text-white font-bold tracking-widest uppercase text-xs">Up Next</h3>
               </div>
-            ))}
+              <div className="max-h-64 overflow-y-auto">
+                {PLAYLIST.map((item, idx) => (
+                  <div 
+                    key={idx} 
+                    onClick={() => selectTrack(idx)}
+                    className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-white/5 transition-colors ${currentTrackIndex === idx ? 'bg-white/5 border-l-2 border-brand-accent' : ''}`}
+                  >
+                    <div className="w-10 h-10 rounded-md overflow-hidden bg-white/10 flex-shrink-0">
+                      <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex flex-col min-w-0">
+                      <h4 className={`text-sm font-bold truncate ${currentTrackIndex === idx ? 'text-brand-accent' : 'text-white'}`}>
+                        {item.title}
+                      </h4>
+                      <p className="text-white/50 text-xs truncate">{item.artist}</p>
+                    </div>
+                    {currentTrackIndex === idx && isPlaying && (
+                      <div className="ml-auto">
+                        <ListMusic className="w-4 h-4 text-brand-accent animate-pulse" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-4 md:gap-8">
+            <div className="flex items-center gap-4 min-w-[200px] md:min-w-[280px]">
+              <motion.div 
+                animate={{
+                  width: isScrolled ? 48 : 72,
+                  height: isScrolled ? 48 : 72
+                }}
+                transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                className="rounded-lg overflow-hidden flex-shrink-0 bg-white/10 shadow-lg"
+              >
+                <img src={track.image} alt={track.title} className="w-full h-full object-cover" />
+              </motion.div>
+              <div className="flex flex-col justify-center">
+                <h4 className="text-white font-bold text-sm md:text-base leading-tight truncate max-w-[150px] md:max-w-[200px]" title={track.title}>{track.title}</h4>
+                <p className="text-brand-text-light/60 text-xs md:text-sm truncate max-w-[150px] md:max-w-[200px] mt-0.5">{track.artist}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 md:gap-6 flex-shrink-0">
+              <button onClick={toggleShuffle} className={`transition-colors hidden md:block ${isShuffle ? 'text-brand-accent' : 'text-white/40 hover:text-white'}`}><Shuffle className="w-4 h-4" /></button>
+              <button onClick={handlePrev} className="text-white/80 hover:text-white transition-colors"><SkipBack className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /></button>
+              
+              <motion.button 
+                onClick={togglePlay} 
+                animate={{
+                  width: isScrolled ? 44 : 56,
+                  height: isScrolled ? 44 : 56,
+                }}
+                transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                className="flex items-center justify-center bg-white text-brand-darkest rounded-full shadow-[0_4px_15px_rgba(255,255,255,0.15)] group"
+              >
+                <div className="group-hover:scale-105 group-active:scale-95 transition-transform flex items-center justify-center w-full h-full">
+                  {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" /> : <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />}
+                </div>
+              </motion.button>
+              
+              <button onClick={handleNext} className="text-white/80 hover:text-white transition-colors"><SkipForward className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /></button>
+              <button onClick={toggleRepeat} className={`transition-colors hidden md:block ${isRepeat ? 'text-brand-accent' : 'text-white/40 hover:text-white'}`}><Repeat className="w-4 h-4" /></button>
+            </div>
+
+            <div className="hidden lg:flex flex-grow items-center gap-4 px-6 max-w-2xl mx-auto w-full min-w-[200px]">
+              <span className="text-[11px] font-bold tracking-widest text-white/40 tabular-nums">{currentTime}</span>
+              <div className="flex-grow cursor-pointer w-full" ref={containerRef}></div>
+              <span className="text-[11px] font-bold tracking-widest text-white/40 tabular-nums">{duration}</span>
+            </div>
+
+            <div className="hidden md:flex items-center gap-6 flex-shrink-0 min-w-[120px] justify-end text-white/40">
+              <button onClick={toggleMute} className="hover:text-white transition-colors">{isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}</button>
+              <button onClick={togglePlaylist} className={`transition-colors ${showPlaylist ? 'text-brand-accent' : 'hover:text-white'}`}><ListMusic className="w-5 h-5" /></button>
+            </div>
           </div>
         </div>
-      )}
-
-      {/* Main Player Bar */}
-      <div className="w-full bg-[#051810]/80 backdrop-blur-2xl border-t border-white/5 py-3 px-4 md:px-8 shadow-[0_-10px_40px_rgba(0,0,0,0.3)] relative z-50">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-4 md:gap-8">
-          
-          {/* Left: Info */}
-          <div className="flex items-center gap-4 min-w-[200px] md:min-w-[280px]">
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden flex-shrink-0 bg-white/10 ">
-               <img src={track.image} alt={track.title} className="w-full h-full object-cover" />
-            </div>
-            <div className="flex flex-col">
-              <h4 className="text-white font-bold text-sm md:text-base leading-tight truncate max-w-[150px] md:max-w-[200px]" title={track.title}>
-                {track.title}
-              </h4>
-              <p className="text-brand-text-light/60 text-xs md:text-sm truncate max-w-[150px] md:max-w-[200px] mt-0.5" title={track.artist}>
-                {track.artist}
-              </p>
-            </div>
-          </div>
-
-          {/* Center: Controls */}
-          <div className="flex items-center gap-4 md:gap-6 flex-shrink-0">
-            <button 
-              onClick={toggleShuffle} 
-              className={`transition-colors hidden md:block ${isShuffle ? 'text-brand-accent' : 'text-white/40 hover:text-white'}`}
-            >
-              <Shuffle className="w-4 h-4" />
-            </button>
-            
-            <button onClick={handlePrev} className="text-white/80 hover:text-white transition-colors">
-              <SkipBack className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" />
-            </button>
-            
-            <button 
-              onClick={togglePlay}
-              className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-brand-darkest rounded-full hover:scale-105 transition-transform "
-            >
-              {isPlaying ? (
-                <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" />
-              ) : (
-                <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />
-              )}
-            </button>
-            
-            <button onClick={handleNext} className="text-white/80 hover:text-white transition-colors">
-              <SkipForward className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" />
-            </button>
-            
-            <button 
-              onClick={toggleRepeat} 
-              className={`transition-colors hidden md:block ${isRepeat ? 'text-brand-accent' : 'text-white/40 hover:text-white'}`}
-            >
-              <Repeat className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Right Center: Waveform */}
-          <div className="hidden lg:flex flex-grow items-center gap-4 px-6 max-w-2xl mx-auto">
-             <span className="text-[11px] font-bold tracking-widest text-white/40 tabular-nums">{currentTime}</span>
-             <div className="flex-grow cursor-pointer" ref={containerRef}></div>
-             <span className="text-[11px] font-bold tracking-widest text-white/40 tabular-nums">{duration}</span>
-          </div>
-
-          {/* Right End: Volume & Misc */}
-          <div className="hidden md:flex items-center gap-6 flex-shrink-0 min-w-[120px] justify-end text-white/40">
-            <button onClick={toggleMute} className="hover:text-white transition-colors">
-              {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-            </button>
-            <button onClick={togglePlaylist} className={`transition-colors ${showPlaylist ? 'text-brand-accent' : 'hover:text-white'}`}>
-              <ListMusic className="w-5 h-5" />
-            </button>
-          </div>
-          
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

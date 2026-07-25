@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
 const TiktokIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 448 512" fill="currentColor">
@@ -25,127 +26,153 @@ const YoutubeIcon = ({ className }: { className?: string }) => (
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  });
 
   return (
-    <nav className="relative flex items-center justify-between px-6 py-4 bg-brand-primary text-brand-text-light font-sans w-full z-50 shadow-md">
-      
-      {/* --- Desktop Navigation --- */}
-      <div className="hidden lg:flex w-full justify-between items-center">
-        
-        {/* Left Side Container */}
-        <div className="flex flex-1 justify-between items-center pr-24">
+    <header className="sticky top-0 z-50 w-full flex justify-center pointer-events-none h-[80px] lg:h-[90px]">
+      <motion.nav
+        initial={false}
+        animate={{
+          width: isScrolled ? "calc(100% - 2rem)" : "100%",
+          y: isScrolled ? 16 : 0,
+          borderRadius: isScrolled ? 24 : 0,
+          backgroundColor: isScrolled ? "rgba(5, 24, 16, 0.85)" : "rgba(5, 24, 16, 1)",
+          backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
+          boxShadow: isScrolled ? "0 10px 40px rgba(0,0,0,0.3)" : "0 4px 6px rgba(0,0,0,0.1)",
+        }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-auto relative flex items-center justify-between px-6 py-4 lg:py-5 text-brand-text-light font-sans z-50 border border-transparent overflow-hidden lg:overflow-visible"
+        style={{
+          borderColor: isScrolled ? "rgba(255,255,255,0.1)" : "transparent",
+        }}
+      >
+        {/* --- Desktop Navigation --- */}
+        <div className="hidden lg:flex w-full justify-between items-center max-w-[1600px] mx-auto">
           
-          {/* Extreme Left: Socials */}
-          <div className="flex space-x-5">
-           
-            <Link href="#" aria-label="YouTube" className="hover:text-brand-accent transition-colors">
-              <YoutubeIcon className="w-[22px] h-[22px]" />
-            </Link>
-            <Link href="#" aria-label="Instagram" className="hover:text-brand-accent transition-colors">
-              <InstagramIcon className="w-5 h-5" />
-            </Link>
-             <Link href="#" aria-label="TikTok" className="hover:text-brand-accent transition-colors">
-              <TiktokIcon className="w-5 h-5" />
+          {/* Left Side Container */}
+          <div className="flex flex-1 justify-between items-center pr-24">
+            
+            {/* Extreme Left: Socials */}
+            <div className="flex space-x-5">
+              <Link href="#" aria-label="TikTok" className="hover:text-brand-accent transition-colors">
+                <TiktokIcon className="w-5 h-5" />
+              </Link>
+              <Link href="#" aria-label="Instagram" className="hover:text-brand-accent transition-colors">
+                <InstagramIcon className="w-5 h-5" />
+              </Link>
+              <Link href="#" aria-label="YouTube" className="hover:text-brand-accent transition-colors">
+                <YoutubeIcon className="w-[22px] h-[22px]" />
+              </Link>
+            </div>
+            
+            {/* Left Inner: Navigation Links */}
+            <div className="flex space-x-8 font-medium">
+              <Link href="/" className="hover:text-brand-accent transition-colors">Home</Link>
+              <Link href="/profile" className="hover:text-brand-accent transition-colors">Profile</Link>
+              <Link href="/recitations" className="hover:text-brand-accent transition-colors">Recitations</Link>
+            </div>
+          </div>
+
+          {/* Center: Absolutely Positioned Logo */}
+          <div className="absolute bg-transparent left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
+            <Link href="/" className="pointer-events-auto block p-2 rounded-full">
+              <Image 
+                src="/imgs/logo.png" 
+                alt="Logo" 
+                width={100} 
+                height={100} 
+                className="w-[90px] h-auto object-contain transition-transform duration-300"
+                style={{ transform: isScrolled ? "scale(0.85)" : "scale(1)" }}
+                priority
+              />
             </Link>
           </div>
-          
-          {/* Left Inner: Navigation Links */}
-          <div className="flex space-x-8 font-medium">
-            <Link href="/" className="hover:text-brand-accent transition-colors">Home</Link>
-            <Link href="/profile" className="hover:text-brand-accent transition-colors">Profile</Link>
-            <Link href="/recitations" className="hover:text-brand-accent transition-colors">Recitations</Link>
+
+          {/* Right Side Container */}
+          <div className="flex flex-1 justify-between items-center pl-24">
+            
+            {/* Right Inner: Navigation Links */}
+            <div className="flex space-x-8 font-medium">
+              <Link href="/courses" className="hover:text-brand-accent transition-colors">Courses</Link>
+              <Link href="/contact" className="hover:text-brand-accent transition-colors">Contact</Link>
+              <Link href="/connections" className="hover:text-brand-accent transition-colors">Connections</Link>
+            </div>
+
+            {/* Extreme Right: CTA */}
+            <button className="bg-brand-accent text-brand-darkest font-semibold px-7 py-2.5 rounded-lg hover:bg-opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+              Register
+            </button>
           </div>
         </div>
 
-        {/* Center: Absolutely Positioned Logo */}
-        <div className="absolute bg-transparent left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-          <Link href="/" className="pointer-events-auto block p-2 rounded-full">
+        {/* --- Mobile Navigation Header (Hidden on lg) --- */}
+        <div className="flex lg:hidden w-full justify-between items-center">
+          {/* Mobile Logo on the left */}
+          <Link href="/" className="z-10">
             <Image 
               src="/imgs/logo.png" 
               alt="Logo" 
-              width={100} 
-              height={100} 
-              className="w-30 h-auto object-contain"
-              priority
+              width={80} 
+              height={80} 
+              className="w-14 h-auto object-contain"
             />
           </Link>
-        </div>
-
-        {/* Right Side Container */}
-        <div className="flex flex-1 justify-between items-center pl-24">
           
-          {/* Right Inner: Navigation Links */}
-          <div className="flex space-x-8 font-medium">
-            <Link href="/courses" className="hover:text-brand-accent transition-colors">Courses</Link>
-            <Link href="/contact" className="hover:text-brand-accent transition-colors">Contact</Link>
-            <Link href="/connections" className="hover:text-brand-accent transition-colors">Connections</Link>
-          </div>
-
-          {/* Extreme Right: CTA */}
-          <button className="bg-brand-accent text-brand-darkest font-semibold px-7 py-2.5 rounded-md hover:bg-opacity-90 hover:scale-[1.02] active:scale-95 transition-all">
-            Register
+          {/* Hamburger Toggle */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-brand-text-light hover:text-brand-accent z-50 p-2 focus:outline-none"
+            aria-label="Toggle Mobile Menu"
+          >
+            {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
         </div>
-      </div>
 
-      {/* --- Mobile Navigation Header (Hidden on lg) --- */}
-      <div className="flex lg:hidden w-full justify-between items-center">
-        {/* Mobile Logo on the left */}
-        <Link href="/" className="z-10">
-          <Image 
-            src="/imgs/logo.png" 
-            alt="Logo" 
-            width={80} 
-            height={80} 
-            className="w-16 h-auto object-contain"
-          />
-        </Link>
-        
-        {/* Hamburger Toggle */}
-        <button 
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-brand-text-light hover:text-brand-accent z-50 p-2 focus:outline-none"
-          aria-label="Toggle Mobile Menu"
-        >
-          {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-        </button>
-      </div>
+        {/* --- Mobile Menu Dropdown --- */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-full left-0 w-full bg-[#051810]/95 backdrop-blur-xl border-t border-brand-secondary/50 lg:hidden flex flex-col px-6 py-6 space-y-6 shadow-2xl z-40 rounded-b-2xl">
+            
+            {/* Mobile Links */}
+            <div className="flex flex-col space-y-5 font-medium text-lg text-center">
+              <Link href="/" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+              <Link href="/profile" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Profile</Link>
+              <Link href="/recitations" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Recitations</Link>
+              <Link href="/courses" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Courses</Link>
+              <Link href="/contact" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+              <Link href="/connections" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Connections</Link>
+            </div>
+            
+            <hr className="border-white/10 border-t" />
+            
+            {/* Mobile Socials */}
+            <div className="flex items-center space-x-6 justify-center">
+              <Link href="#" aria-label="TikTok" className="hover:text-brand-accent transition-colors">
+                <TiktokIcon className="w-6 h-6" />
+              </Link>
+              <Link href="#" aria-label="Instagram" className="hover:text-brand-accent transition-colors">
+                <InstagramIcon className="w-6 h-6" />
+              </Link>
+              <Link href="#" aria-label="YouTube" className="hover:text-brand-accent transition-colors">
+                <YoutubeIcon className="w-[26px] h-[26px]" />
+              </Link>
+            </div>
 
-      {/* --- Mobile Menu Dropdown --- */}
-      {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-brand-primary border-t border-brand-secondary lg:hidden flex flex-col px-6 py-6 space-y-6 shadow-xl z-40">
-          
-          {/* Mobile Links */}
-          <div className="flex flex-col space-y-5 font-medium text-lg">
-            <Link href="/" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-            <Link href="/profile" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Profile</Link>
-            <Link href="/recitations" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Recitations</Link>
-            <Link href="/courses" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Courses</Link>
-            <Link href="/contact" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
-            <Link href="/connections" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Connections</Link>
+            {/* Mobile CTA */}
+            <button className="bg-brand-accent text-brand-darkest font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all w-full mt-4 text-center">
+              Register
+            </button>
           </div>
-          
-          <hr className="border-brand-secondary border-t-2 opacity-50" />
-          
-          {/* Mobile Socials */}
-          <div className="flex items-center space-x-6 justify-center">
-            <Link href="#" aria-label="TikTok" className="hover:text-brand-accent transition-colors">
-              <TiktokIcon className="w-6 h-6" />
-            </Link>
-            <Link href="#" aria-label="Instagram" className="hover:text-brand-accent transition-colors">
-              <InstagramIcon className="w-6 h-6" />
-            </Link>
-            <Link href="#" aria-label="YouTube" className="hover:text-brand-accent transition-colors">
-              <YoutubeIcon className="w-[26px] h-[26px]" />
-            </Link>
-          </div>
-
-          {/* Mobile CTA */}
-          <button className="bg-brand-accent text-brand-darkest font-semibold px-6 py-3 rounded-md hover:bg-opacity-90 transition-all w-full mt-4 text-center">
-            Register
-          </button>
-        </div>
-      )}
-    </nav>
+        )}
+      </motion.nav>
+    </header>
   );
 }
