@@ -4,7 +4,7 @@ import Link from "next/link";
 export function AboutSection() {
   return (
     <section className="w-full py-16 lg:py-20 px-6 bg-brand-text-light font-sans overflow-hidden">
-        <div className="text-center mb-12 lg:mb-16">
+        <div className="text-center mb-12 lg:mb-8">
               <h4 className="text-brand-accent font-sans font-bold tracking-[0.2em] uppercase text-lg mb-4">
                 About Ya'kub
               </h4>
@@ -43,7 +43,7 @@ export function AboutSection() {
                   src="/imgs/y-1.jpg"
                   alt="Exploring Knowledge"
                   fill
-                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[2s] ease-out "
                   sizes="(max-width: 1024px) 100vw, 33vw"
                />
                {/* Subtle color overlay to integrate image with the brand palette */}
