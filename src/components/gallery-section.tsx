@@ -129,7 +129,7 @@ export function GallerySection() {
                   transition={{ duration: 0.25, ease: "easeOut" }}
                   src={images[selectedIndex].src}
                   alt={images[selectedIndex].alt}
-                  className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl cursor-default"
+                  className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl cursor-default"
                 />
               </AnimatePresence>
 
