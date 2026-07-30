@@ -44,16 +44,23 @@ export function Navbar() {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
+    const previous = scrollY.getPrevious() || 0;
+    const isScrollingUp = latest < previous;
+    const isScrollingDown = latest > previous && latest > 50;
 
     // Clear existing hide timeout whenever scrolling happens
     if (scrollTimeout.current) {
       clearTimeout(scrollTimeout.current);
     }
 
-    // Always show navbar immediately when scrolling
-    setIsVisible(true);
+    // Hide immediately on scroll down, show on scroll up or at the top
+    if (isScrollingDown && !isMenuOpenRef.current) {
+      setIsVisible(false);
+    } else if (isScrollingUp || latest <= 50) {
+      setIsVisible(true);
+    }
 
-    // If we are scrolled down and menu is NOT open, set a timer to hide the navbar
+    // If we are scrolled down and menu is NOT open, set a timer to hide the navbar when idle
     if (latest > 50 && !isMenuOpenRef.current) {
       scrollTimeout.current = setTimeout(() => {
         setIsVisible(false);

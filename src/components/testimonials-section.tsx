@@ -73,6 +73,16 @@ export function TestimonialSection() {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  // Auto-play functionality
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+
+    return () => clearInterval(timer);
+  }, [currentIndex]);
+
   const getPosition = (index: number) => {
     if (index === currentIndex) return 0;
     if (index === (currentIndex - 1 + testimonials.length) % testimonials.length) return -1;
@@ -83,7 +93,7 @@ export function TestimonialSection() {
   return (
     <>
     {/* Testimonial Banner */}
-     <div className="w-full relative h-[13rem] overflow-x-hidden bg-brand-accent ">
+     <div className="w-full relative h-[13rem] overflow-hidden bg-brand-accent ">
        {/* Floating Dots Background */}
        {bannerDots.map((dot) => (
          <motion.div
@@ -206,19 +216,32 @@ export function TestimonialSection() {
       </div>
 
       {/* Pagination Dots */}
-      <div className="flex items-center justify-center gap-2 mt-6 z-20">
-        {testimonials.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              setDirection(i > currentIndex ? 1 : -1);
-              setCurrentIndex(i);
-            }}
-            className={`rounded-full transition-all duration-300 ${
-              i === currentIndex ? 'w-2.5 h-2.5 bg-brand-accent' : 'w-2 h-2 bg-white/20 hover:bg-white/40'
-            }`}
-          />
-        ))}
+      <div className="flex items-center justify-center gap-3 mt-6 z-20">
+        {testimonials.map((_, i) => {
+          const isActive = i === currentIndex;
+          return (
+            <button
+              key={i}
+              onClick={() => {
+                setDirection(i > currentIndex ? 1 : -1);
+                setCurrentIndex(i);
+              }}
+              className={`relative w-12 h-2 rounded-full overflow-hidden transition-colors focus:outline-none ${
+                isActive ? "bg-white/30" : "bg-white/50 hover:bg-white/80"
+              }`}
+            >
+              {isActive && (
+                <motion.div
+                  key={currentIndex}
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 6, ease: "linear" }}
+                  className="absolute left-0 top-0 h-full bg-brand-accent rounded-full"
+                />
+              )}
+            </button>
+          );
+        })}
       </div>
       
       {/* Mobile Swipe Indicators */}

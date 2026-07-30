@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 // Mock data for the carousel using the available images in the public/imgs folder.
 const slides = [
@@ -66,7 +67,7 @@ export function HeroCarousel() {
     }, 6000); // Change slide every 6 seconds
 
     return () => clearInterval(timer);
-  }, [nextSlide]);
+  }, [nextSlide, currentSlide]);
 
   return (
     <div className="relative w-full h-[600px] lg:h-[350px] overflow-hidden  font-sans">
@@ -115,19 +116,30 @@ export function HeroCarousel() {
       </button>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all focus:outline-none ${
-              currentSlide === index 
-                ? "bg-brand-accent scale-110" 
-                : "bg-brand-text-light/50 hover:bg-brand-text-light/80"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex space-x-3 items-center">
+        {slides.map((_, index) => {
+          const isActive = currentSlide === index;
+          return (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`relative w-6 h-2 rounded-full overflow-hidden transition-colors focus:outline-none ${
+                isActive ? "bg-white/30" : "bg-white/50 hover:bg-white/80"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            >
+              {isActive && (
+                <motion.div
+                  key={currentSlide} // Reset animation when slide changes
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 6, ease: "linear" }}
+                  className="absolute left-0 top-0 h-full bg-brand-accent rounded-full"
+                />
+              )}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

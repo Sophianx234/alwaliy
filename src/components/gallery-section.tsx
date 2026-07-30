@@ -37,11 +37,42 @@ const images = [
   { src: "/imgs/stock/y-18.jpg", alt: "Gallery image 18" },
   { src: "/imgs/stock/y-19.jpg", alt: "Gallery image 19" },
   { src: "/imgs/stock/y-20.jpg", alt: "Gallery image 20" },
+  { src: "/imgs/stock/y-21.jpeg", alt: "Gallery image 21" },
+  { src: "/imgs/stock/y-22.jpeg", alt: "Gallery image 22" },
+  { src: "/imgs/stock/y-23.jpeg", alt: "Gallery image 23" },
+  { src: "/imgs/stock/y-24.jpeg", alt: "Gallery image 24" },
+  { src: "/imgs/stock/y-25.jpeg", alt: "Gallery image 25" },
+  { src: "/imgs/stock/y-26.jpeg", alt: "Gallery image 26" },
+  { src: "/imgs/stock/y-27.jpeg", alt: "Gallery image 27" },
+  { src: "/imgs/stock/y-28.jpeg", alt: "Gallery image 28" },
+  { src: "/imgs/stock/y-29.jpeg", alt: "Gallery image 29" },
+  { src: "/imgs/stock/y-30.jpeg", alt: "Gallery image 30" },
+  { src: "/imgs/stock/y-31.jpeg", alt: "Gallery image 31" },
+  { src: "/imgs/stock/y-32.jpeg", alt: "Gallery image 32" },
+  { src: "/imgs/stock/y-33.jpeg", alt: "Gallery image 33" },
+  { src: "/imgs/stock/y-34.jpeg", alt: "Gallery image 34" },
+  { src: "/imgs/stock/y-35.jpeg", alt: "Gallery image 35" },
+  { src: "/imgs/stock/y-36.jpeg", alt: "Gallery image 36" },
+  { src: "/imgs/stock/y-37.jpeg", alt: "Gallery image 37" },
+  { src: "/imgs/stock/y-38.jpeg", alt: "Gallery image 38" },
+  { src: "/imgs/stock/y-39.jpeg", alt: "Gallery image 39" },
+  { src: "/imgs/stock/y-40.jpeg", alt: "Gallery image 40" },
+  { src: "/imgs/stock/y-41.jpeg", alt: "Gallery image 41" },
+  { src: "/imgs/stock/y-42.jpeg", alt: "Gallery image 42" },
+  { src: "/imgs/stock/y-43.jpeg", alt: "Gallery image 43" },
+  { src: "/imgs/stock/y-44.jpeg", alt: "Gallery image 44" },
+  { src: "/imgs/stock/y-45.jpeg", alt: "Gallery image 45" },
+  { src: "/imgs/stock/y-46.jpeg", alt: "Gallery image 46" },
+  { src: "/imgs/stock/y-47.jpeg", alt: "Gallery image 47" },
+  { src: "/imgs/stock/y-48.jpeg", alt: "Gallery image 48" },
+  { src: "/imgs/stock/y-49.jpeg", alt: "Gallery image 49" },
+  { src: "/imgs/stock/y-50.jpeg", alt: "Gallery image 50" },
+  { src: "/imgs/stock/y-51.jpeg", alt: "Gallery image 51" },
 ];
 
 export function GallerySection() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [visibleCount, setVisibleCount] = useState(24);
   const [bannerDots, setBannerDots] = useState<Dot[]>([]);
 
   useEffect(() => {

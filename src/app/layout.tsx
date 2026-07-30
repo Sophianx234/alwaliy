@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond, Amiri } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { SmoothScrolling } from "@/components/smooth-scrolling";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,11 +34,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorant.variable} ${amiri.variable} h-full`}
+      className={`${inter.variable} ${cormorant.variable} ${amiri.variable}`}
     >
     <Navbar />
-      <body className="font-sans antialiased bg-brand-primary text-brand-text-light min-h-full flex flex-col overflow-x-clip ">
-        {children}
+      <body className="font-sans antialiased bg-brand-primary text-brand-text-light flex flex-col overflow-x-clip ">
+        <SmoothScrolling>
+          {children}
+        </SmoothScrolling>
       </body>
     </html>
   );
