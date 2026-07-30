@@ -71,7 +71,7 @@ export function Navbar() {
           boxShadow: isScrolled ? "0 10px 40px rgba(0,0,0,0.3)" : "0 4px 6px rgba(0,0,0,0.1)",
         }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto relative flex items-center justify-between px-6 py-4 lg:py-5 text-brand-text-light font-sans z-50 border border-transparent overflow-hidden lg:overflow-visible"
+        className="pointer-events-auto relative flex items-center justify-between px-6 py-4 lg:py-5 text-brand-text-light font-sans z-50 border border-transparent overflow-visible"
         style={{
           borderColor: isScrolled ? "rgba(255,255,255,0.1)" : "transparent",
         }}
@@ -153,14 +153,21 @@ export function Navbar() {
             />
           </Link>
           
-          {/* Hamburger Toggle */}
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-brand-text-light hover:text-brand-accent z-50 p-2 focus:outline-none"
-            aria-label="Toggle Mobile Menu"
-          >
-            {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-          </button>
+          {/* Mobile Actions (Coffee + Hamburger) */}
+          <div className="flex items-center gap-2">
+            <Link href="#" className="text-brand-text-light hover:text-brand-accent transition-colors p-2 z-50" aria-label="Buy me a coffee">
+              <Coffee className="w-6 h-6" />
+            </Link>
+            
+            {/* Hamburger Toggle */}
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-brand-text-light hover:text-brand-accent z-50 p-2 focus:outline-none"
+              aria-label="Toggle Mobile Menu"
+            >
+              {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            </button>
+          </div>
         </div>
 
         {/* --- Mobile Menu Dropdown --- */}
@@ -194,9 +201,6 @@ export function Navbar() {
 
             {/* Mobile CTA */}
             <div className="flex items-center gap-4 mt-4 w-full">
-              <Link href="#" className="text-brand-text-light hover:text-brand-accent transition-colors p-2 bg-white/5 rounded-lg" aria-label="Buy me a coffee">
-                <Coffee className="w-6 h-6" />
-              </Link>
               <button className="flex-1 bg-brand-accent text-brand-darkest font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all text-center">
                 Register
               </button>

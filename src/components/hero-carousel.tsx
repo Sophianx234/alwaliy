@@ -11,17 +11,17 @@ const slides = [
   {
     id: 1,
     image: "/imgs/h-1.jpeg",
-    mobileImage: "/imgs/stock/y-1.jpeg",
+    mobileImage: "/imgs/stock/y-17.jpg",
   },
   {
     id: 2,
     image: "/imgs/h-1.jpeg",
-    mobileImage: "/imgs/stock/y-2.jpeg",
+    mobileImage: "/imgs/stock/y-26.jpeg",
   },
   {
     id: 3,
     image: "/imgs/h-4.jpeg",
-    mobileImage: "/imgs/stock/y-3.jpeg",
+    mobileImage: "/imgs/stock/y-18.jpg",
   },
   {
     id: 4,
