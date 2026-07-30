@@ -10,7 +10,7 @@ const courses = [
     level: "Beginner",
     instructor: "Imam Ahmad",
     instructorImage: "/imgs/h-2.jpeg",
-    image: "/imgs/h-1.jpeg"
+    image: "https://images.unsplash.com/photo-1609599006353-e629aaab3151?auto=format&fit=crop&w=800&q=80"
   },
   {
     category: "Prophetic Traditions",
@@ -21,7 +21,7 @@ const courses = [
     level: "Intermediate",
     instructor: "Dr. Fatima S.",
     instructorImage: "/imgs/h-3.jpeg",
-    image: "/imgs/h-2.jpeg"
+    image: "https://images.unsplash.com/photo-1564121211835-e88c852648ab?auto=format&fit=crop&w=800&q=80"
   },
   {
     category: "History",
@@ -32,7 +32,7 @@ const courses = [
     level: "Beginner",
     instructor: "Imam Omar K.",
     instructorImage: "/imgs/h-4.jpeg",
-    image: "/imgs/h-3.jpeg"
+    image: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80"
   },
   {
     category: "Theology",
@@ -43,7 +43,7 @@ const courses = [
     level: "Beginner",
     instructor: "Shaykh Zaid T.",
     instructorImage: "/imgs/h-5.jpeg",
-    image: "/imgs/h-4.jpeg"
+    image: "https://images.unsplash.com/photo-1596701062351-8c2c14d1fdd0?auto=format&fit=crop&w=800&q=80"
   },
   {
     category: "Quranic Studies",
@@ -54,7 +54,7 @@ const courses = [
     level: "Advanced",
     instructor: "Shaykh Ahmad",
     instructorImage: "/imgs/h-2.jpeg",
-    image: "/imgs/h-5.jpeg"
+    image: "https://images.unsplash.com/photo-1579294970425-4c070f44da60?auto=format&fit=crop&w=800&q=80"
   },
   {
     category: "Language",
@@ -65,7 +65,7 @@ const courses = [
     level: "All Levels",
     instructor: "Dr. Aisha M.",
     instructorImage: "/imgs/h-3.jpeg",
-    image: "/imgs/h-5x.jpeg"
+    image: "https://images.unsplash.com/photo-1603525166440-66236b2803c7?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
