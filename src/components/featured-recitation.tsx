@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   SkipForward, SkipBack, Lightbulb, Repeat, Shuffle, 
-  BookOpen, Share2, Heart, Maximize, Minimize, Check, X 
+  BookOpen, Share2, Heart, Maximize, Minimize, Check, X, ListMusic, ChevronDown 
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -49,8 +49,29 @@ export function FeaturedRecitation() {
   const [isShuffle, setIsShuffle] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showTafsir, setShowTafsir] = useState(false);
+  const [showPlaylistPopover, setShowPlaylistPopover] = useState(false);
   const [copied, setCopied] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
+
+  const playlistRef = useRef<HTMLDivElement>(null);
+  const playlistBtnRef = useRef<HTMLButtonElement>(null);
+
+  // Close playlist when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showPlaylistPopover &&
+        playlistRef.current &&
+        !playlistRef.current.contains(event.target as Node) &&
+        playlistBtnRef.current &&
+        !playlistBtnRef.current.contains(event.target as Node)
+      ) {
+        setShowPlaylistPopover(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showPlaylistPopover]);
 
   // Load favorites from local storage to avoid hydration mismatch
   useEffect(() => {
@@ -127,6 +148,7 @@ export function FeaturedRecitation() {
       <AnimatePresence>
         {showTafsir && (
           <motion.div
+            data-lenis-prevent="true"
             initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 100 }} transition={{ ease: "easeOut", duration: 0.3 }}
             className="fixed top-0 right-0 bottom-0 w-full sm:w-[450px] bg-brand-darkest/95 backdrop-blur-2xl z-[150] p-8 md:p-12 border-l border-brand-primary overflow-y-auto shadow-2xl flex flex-col"
           >
@@ -199,7 +221,7 @@ export function FeaturedRecitation() {
               </span>
             </button>
 
-            <div className="flex items-center bg-brand-primary/10 border border-brand-primary/30 rounded-xl p-1 gap-1 shadow-lg">
+            <div className="flex items-center bg-brand-primary/10 border border-brand-primary/30 rounded-xl p-1 gap-1 shadow-lg relative">
               <button onClick={() => setIsFullScreen(true)} title="Focus Mode" className="p-3 rounded-lg hover:bg-brand-primary/50 text-white/60 hover:text-white transition-all">
                 <Maximize className="w-5 h-5" />
               </button>
@@ -209,9 +231,56 @@ export function FeaturedRecitation() {
               <button onClick={toggleFavorite} title="Save to Favorites" className="p-3 rounded-lg hover:bg-brand-primary/50 text-white/60 hover:text-white transition-all">
                 <Heart className={`w-5 h-5 transition-all ${isFavorite ? 'fill-brand-accent text-brand-accent' : ''}`} />
               </button>
+              <button ref={playlistBtnRef} onClick={() => setShowPlaylistPopover(!showPlaylistPopover)} title="Playlist" className={`p-3 rounded-lg transition-all ${showPlaylistPopover ? 'bg-brand-accent/20 text-brand-accent' : 'hover:bg-brand-primary/50 text-white/60 hover:text-white'}`}>
+                <ListMusic className="w-5 h-5" />
+              </button>
               <button onClick={handleShare} title="Share" className="p-3 rounded-lg hover:bg-brand-primary/50 text-white/60 hover:text-white transition-all">
                 {copied ? <Check className="w-5 h-5 text-green-400" /> : <Share2 className="w-5 h-5" />}
               </button>
+
+              {/* Playlist Popover */}
+              <AnimatePresence>
+                {showPlaylistPopover && (
+                  <motion.div 
+                    ref={playlistRef as React.RefObject<HTMLDivElement>}
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute bottom-[100%] left-0 mb-4 w-[320px] bg-[#051810]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-[150] flex flex-col"
+                  >
+                    <div className="p-4 border-b border-white/10 shrink-0 flex items-center justify-between">
+                      <h3 className="text-white font-bold tracking-widest uppercase text-xs">Playlist ({activePlaylist.length})</h3>
+                      <button onClick={() => setShowPlaylistPopover(false)} className="text-white/50 hover:text-white"><X className="w-4 h-4" /></button>
+                    </div>
+                    <div data-lenis-prevent="true" className="max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                      {activePlaylist.map((item, idx) => (
+                        <div 
+                          key={idx} 
+                          onClick={() => { setCurrentIndex(idx); setShowPlaylistPopover(false); }}
+                          className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-white/5 transition-colors ${currentIndex === idx ? 'bg-white/5 border-l-2 border-brand-accent' : ''}`}
+                        >
+                          <div className="w-16 h-10 rounded-md overflow-hidden bg-black flex-shrink-0 relative">
+                            <img src={`https://img.youtube.com/vi/${item.id}/mqdefault.jpg`} alt={item.title} className="w-full h-full object-cover opacity-80" />
+                          </div>
+                          <div className="flex flex-col min-w-0">
+                            <h4 className={`text-sm font-bold truncate ${currentIndex === idx ? 'text-brand-accent' : 'text-white'}`}>
+                              {item.title}
+                            </h4>
+                          </div>
+                          {currentIndex === idx && (
+                            <div className="ml-auto">
+                              <ListMusic className="w-4 h-4 text-brand-accent animate-pulse" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="w-full py-1.5 flex justify-center bg-gradient-to-t from-[#051810] to-[#051810]/0 pointer-events-none border-t border-white/5 shrink-0 z-10 shadow-[0_-10px_20px_rgba(5,24,16,0.9)]">
+                      <ChevronDown className="w-4 h-4 text-white/40 animate-bounce" />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 

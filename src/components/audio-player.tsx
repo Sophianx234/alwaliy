@@ -291,7 +291,7 @@ export function AudioPlayer() {
               <div className="p-4 border-b border-white/10 shrink-0">
                 <h3 className="text-white font-bold tracking-widest uppercase text-xs">Up Next</h3>
               </div>
-              <div className="max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <div data-lenis-prevent="true" className="max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {PLAYLIST.map((item, idx) => (
                   <div 
                     key={idx} 

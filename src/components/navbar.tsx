@@ -29,8 +29,8 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   
-  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   const isMenuOpenRef = useRef(isMobileMenuOpen);
+  const lastScrollY = useRef(0);
   const { scrollY } = useScroll();
 
   // Keep ref in sync so the scroll event always knows if menu is open
@@ -38,46 +38,24 @@ export function Navbar() {
     isMenuOpenRef.current = isMobileMenuOpen;
     if (isMobileMenuOpen) {
       setIsVisible(true);
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     }
   }, [isMobileMenuOpen]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
-    const previous = scrollY.getPrevious() || 0;
-    
-    // Ignore micro-scroll jitters (common with iframes)
-    if (Math.abs(latest - previous) < 10) return;
 
-    const isScrollingUp = latest < previous;
-    const isScrollingDown = latest > previous && latest > 50;
+    const diff = latest - lastScrollY.current;
 
-    // Clear existing hide timeout whenever scrolling happens
-    if (scrollTimeout.current) {
-      clearTimeout(scrollTimeout.current);
-    }
-
-    // Hide immediately on scroll down, show on scroll up or at the top
-    if (isScrollingDown && !isMenuOpenRef.current) {
-      setIsVisible(false);
-    } else if (isScrollingUp || latest <= 50) {
-      setIsVisible(true);
-    }
-
-    // If we are scrolled down and menu is NOT open, set a timer to hide the navbar when idle
-    if (latest > 50 && !isMenuOpenRef.current) {
-      scrollTimeout.current = setTimeout(() => {
-        setIsVisible(false);
-      }, 2500); // Hides after 2.5 seconds of no scrolling
+    // Only trigger visibility changes if scrolled more than 15px (cumulative)
+    if (Math.abs(diff) > 15) {
+      if (diff > 0 && latest > 50 && !isMenuOpenRef.current) {
+        setIsVisible(false); // Scrolling down
+      } else if (diff < 0 || latest <= 50) {
+        setIsVisible(true); // Scrolling up
+      }
+      lastScrollY.current = latest;
     }
   });
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-    };
-  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full flex justify-center pointer-events-none h-[80px] lg:h-[90px]">
