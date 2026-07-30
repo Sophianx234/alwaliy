@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Coffee } from "lucide-react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
 const TiktokIcon = ({ className }: { className?: string }) => (
@@ -129,9 +129,14 @@ export function Navbar() {
             </div>
 
             {/* Extreme Right: CTA */}
-            <button className="bg-brand-accent text-brand-darkest font-semibold px-7 py-2.5 rounded-lg hover:bg-opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-md">
-              Register
-            </button>
+            <div className="flex items-center gap-6">
+              <Link href="#" className="text-brand-text-light hover:text-brand-accent transition-transform hover:scale-110" aria-label="Buy me a coffee">
+                <Coffee className="w-6 h-6" />
+              </Link>
+              <button className="bg-brand-accent text-brand-darkest font-semibold px-7 py-2.5 rounded-lg hover:bg-opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+                Register
+              </button>
+            </div>
           </div>
         </div>
 
@@ -188,9 +193,14 @@ export function Navbar() {
             </div>
 
             {/* Mobile CTA */}
-            <button className="bg-brand-accent text-brand-darkest font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all w-full mt-4 text-center">
-              Register
-            </button>
+            <div className="flex items-center gap-4 mt-4 w-full">
+              <Link href="#" className="text-brand-text-light hover:text-brand-accent transition-colors p-2 bg-white/5 rounded-lg" aria-label="Buy me a coffee">
+                <Coffee className="w-6 h-6" />
+              </Link>
+              <button className="flex-1 bg-brand-accent text-brand-darkest font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all text-center">
+                Register
+              </button>
+            </div>
           </div>
         )}
       </motion.nav>
