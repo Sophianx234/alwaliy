@@ -8,6 +8,18 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 const playlist = [
+   ...[
+    'xfuG8nqHo7U', 'STrsMqNvyMY', 'xorIoiSyGS4', 'CFwxRPm_HlM',
+    '-PI351JuCxM', 'eET3a839dcs', '_HSRHtLSD6U', 'dISRyIsI9QY',
+    'Jsj0m7f0ahs', '8on9mAcnvww', 'gFP6gJIS46s', 'I2j-SS_HcnU',
+    'XSF6jmhR3Pg', 'ZxOONpOYV2U', 'sSdANoEYGzc', 'rWS3hmSm6tg',
+    'uYH8TjwDi9g', '1sMjJos3Rhc'
+  ].reverse().map((id, index) => ({
+    id,
+    title: `Yaqub Alwaliy Recitation ${index + 1}`,
+    description: "Experience the profound beauty of this recitation by Yaqub Alwaliy.",
+    translation: "A beautiful recitation from the channel of Yaqub Alwaliy. Reflect upon the verses and find peace in the remembrance of Allah."
+  })),
   {
     id: "ugI4-2Xphz0", 
     title: "Surah Ar-Rahman",
@@ -25,10 +37,12 @@ const playlist = [
     title: "Surah Yaseen",
     description: "The Heart of the Quran - Profound verses to reflect upon during the evening.",
     translation: "Ya, Seen. By the wise Qur'an. Indeed you, [O Muhammad], are from among the messengers, On a straight path. [This is] a revelation of the Exalted in Might, the Merciful..."
-  }
+  },
+ 
 ];
 
 export function FeaturedRecitation() {
+  const [activePlaylist, setActivePlaylist] = useState(playlist);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLightOff, setIsLightOff] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
@@ -44,8 +58,24 @@ export function FeaturedRecitation() {
     if (saved) setFavorites(JSON.parse(saved));
   }, []);
 
+  // Fetch dynamic playlist updates from the background API
+  useEffect(() => {
+    fetch('/api/youtube')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const existingIds = new Set(playlist.map(v => v.id));
+          const newVideos = data.filter((v: any) => !existingIds.has(v.id));
+          if (newVideos.length > 0) {
+            setActivePlaylist([...newVideos, ...playlist]);
+          }
+        }
+      })
+      .catch(console.error);
+  }, []);
+
   const toggleFavorite = () => {
-    const currentId = playlist[currentIndex].id;
+    const currentId = activePlaylist[currentIndex].id;
     setFavorites(prev => {
       const next = prev.includes(currentId) ? prev.filter(id => id !== currentId) : [...prev, currentId];
       localStorage.setItem("alwaliy-favorites", JSON.stringify(next));
@@ -62,20 +92,20 @@ export function FeaturedRecitation() {
   const handleNext = () => {
     if (isShuffle) {
       let nextIndex = currentIndex;
-      while(nextIndex === currentIndex && playlist.length > 1) {
-        nextIndex = Math.floor(Math.random() * playlist.length);
+      while(nextIndex === currentIndex && activePlaylist.length > 1) {
+        nextIndex = Math.floor(Math.random() * activePlaylist.length);
       }
       setCurrentIndex(nextIndex);
     } else {
-      setCurrentIndex((prev) => (prev + 1) % playlist.length);
+      setCurrentIndex((prev) => (prev + 1) % activePlaylist.length);
     }
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    setCurrentIndex((prev) => (prev - 1 + activePlaylist.length) % activePlaylist.length);
   };
 
-  const currentVideo = playlist[currentIndex];
+  const currentVideo = activePlaylist[currentIndex];
   const isFavorite = favorites.includes(currentVideo.id);
   const loopParams = isLooping ? `&loop=1&playlist=${currentVideo.id}` : "";
 

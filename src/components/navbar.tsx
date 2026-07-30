@@ -45,6 +45,10 @@ export function Navbar() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
     const previous = scrollY.getPrevious() || 0;
+    
+    // Ignore micro-scroll jitters (common with iframes)
+    if (Math.abs(latest - previous) < 10) return;
+
     const isScrollingUp = latest < previous;
     const isScrollingDown = latest > previous && latest > 50;
 

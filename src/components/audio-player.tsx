@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import WaveSurfer from "wavesurfer.js";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, ListMusic, Shuffle, Repeat, X, Disc } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, ListMusic, Shuffle, Repeat, X, Disc, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
 const PLAYLIST = [
@@ -287,8 +287,8 @@ export function AudioPlayer() {
           
           {/* Playlist Popover */}
           {showPlaylist && (
-            <div ref={playlistRef} className="absolute bottom-[100%] right-4 md:right-8 mb-4 w-72 md:w-80 bg-[#051810]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 transform transition-all">
-              <div className="p-4 border-b border-white/10">
+            <div ref={playlistRef} className="absolute bottom-[100%] right-4 md:right-8 mb-4 w-72 md:w-80 bg-[#051810]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 transform transition-all flex flex-col">
+              <div className="p-4 border-b border-white/10 shrink-0">
                 <h3 className="text-white font-bold tracking-widest uppercase text-xs">Up Next</h3>
               </div>
               <div className="max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -314,6 +314,9 @@ export function AudioPlayer() {
                     )}
                   </div>
                 ))}
+              </div>
+              <div className="w-full py-1.5 flex justify-center bg-gradient-to-t from-[#051810] to-[#051810]/0 pointer-events-none border-t border-white/5 shrink-0 z-10 shadow-[0_-10px_20px_rgba(5,24,16,0.9)]">
+                <ChevronDown className="w-4 h-4 text-white/40 animate-bounce" />
               </div>
             </div>
           )}
