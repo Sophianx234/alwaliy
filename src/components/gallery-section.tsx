@@ -142,7 +142,7 @@ export function GallerySection() {
         
 
         {/* Unsplash-style Masonry Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-2 space-y-2">
+        <div className="columns-2 sm:columns-2 lg:columns-3 xl:columns-4 gap-2 space-y-2">
           {images.slice(0, visibleCount).map((img, i) => (
             <div 
               key={i} 
