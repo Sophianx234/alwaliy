@@ -31,7 +31,19 @@ export function Navbar() {
   
   const isMenuOpenRef = useRef(isMobileMenuOpen);
   const lastScrollY = useRef(0);
+  const navRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobileMenuOpen && navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   // Keep ref in sync so the scroll event always knows if menu is open
   useEffect(() => {
@@ -60,6 +72,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full flex justify-center pointer-events-none h-[80px] lg:h-[90px]">
       <motion.nav
+        ref={navRef as any}
         initial={false}
         animate={{
           width: isScrolled ? "calc(100% - 2rem)" : "100%",
