@@ -7,10 +7,64 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 
 const PLAYLIST = [
   {
-    title: "Yakub Recitation",
+    title: "Yakub Recitation 1",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-1.mp3",
-    image: "/imgs/h-1.jpeg"
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 2",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-2.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 3",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-3.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 4",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-4.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 5",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-5.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 6",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-6.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 7",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-7.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 8",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-8.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 9",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-9.mp3",
+    image: "/imgs/h-2.jpeg"
+  },
+  {
+    title: "Yakub Recitation 10",
+    artist: "Beautiful Recitation",
+    url: "/audios/yakub-10.mp3",
+    image: "/imgs/h-2.jpeg"
   },
   {
     title: "Forgive Me (Vocals Only)",
@@ -182,15 +236,18 @@ export function AudioPlayer() {
 
       {/* Main Expanded Player (Uses clipping mask to hide/show without unmounting) */}
       <motion.div
-        className="pointer-events-auto w-full relative bg-[#051810]/95 backdrop-blur-3xl border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.3)]"
+        layout
+        className={`pointer-events-auto w-full relative bg-[#051810]/95 backdrop-blur-3xl border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.3)] flex flex-col justify-center ${
+          !isScrolled 
+            ? "h-[calc(100vh-680px)] min-h-[130px] lg:min-h-0 lg:h-[calc(100vh-440px)]" 
+            : "h-auto py-3 min-h-0"
+        }`}
         initial={false}
         animate={{
           clipPath: isExpanded ? "inset(-1000px 0px 0px 0px)" : "inset(-1000px 100% 0px 0px)",
           opacity: isExpanded ? 1 : 0,
-          paddingTop: isScrolled ? "12px" : "24px",
-          paddingBottom: isScrolled ? "12px" : "24px",
         }}
-        transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="w-full px-4 md:px-8">
           

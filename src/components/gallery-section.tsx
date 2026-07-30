@@ -6,13 +6,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 const images = [
-  { src: "/imgs/h-1.jpeg", alt: "Gathering and recitation" },
-  { src: "/imgs/h-2.jpeg", alt: "Community engagement" },
-  { src: "/imgs/y-1.jpg", alt: "Study session" },
-  { src: "/imgs/h-4.jpeg", alt: "Focus and learning" },
-  { src: "/imgs/h-5.jpeg", alt: "Spiritual reflection" },
-  { src: "/imgs/h-3.jpeg", alt: "Discussion" },
-  { src: "/imgs/h-5x.jpeg", alt: "Togetherness" },
+  { src: "/imgs/stock/y-1.jpeg", alt: "Gallery image 1" },
+  { src: "/imgs/stock/y-2.jpeg", alt: "Gallery image 2" },
+  { src: "/imgs/stock/y-3.jpeg", alt: "Gallery image 3" },
+  { src: "/imgs/stock/y-4.jpeg", alt: "Gallery image 4" },
+  { src: "/imgs/stock/y-5.jpeg", alt: "Gallery image 5" },
+  { src: "/imgs/stock/y-6.jpeg", alt: "Gallery image 6" },
+  { src: "/imgs/stock/y-7.jpeg", alt: "Gallery image 7" },
+  { src: "/imgs/stock/y-8.jpeg", alt: "Gallery image 8" },
+  { src: "/imgs/stock/y-9.jpeg", alt: "Gallery image 9" },
 ];
 
 export function GallerySection() {
