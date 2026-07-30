@@ -82,7 +82,7 @@ export function HeroCarousel() {
             <div className="absolute inset-0 z-0">
               <Image
                 src={slide.image}
-                alt={slide.title}
+                alt={`Hero Slide ${index + 1}`}
                 fill
                 priority={index === 0} // Only prioritize the first image for LCP
                 className="object-cover object-center"
