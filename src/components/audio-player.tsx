@@ -86,7 +86,7 @@ export function AudioPlayer() {
   const [duration, setDuration] = useState("00:00");
   
   const [isMuted, setIsMuted] = useState(false);
-  const [isRepeat, setIsRepeat] = useState(false);
+  const [repeatMode, setRepeatMode] = useState(0); // 0: Off, 1: Loop All, 2: Loop One
   const [isShuffle, setIsShuffle] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
@@ -168,7 +168,7 @@ export function AudioPlayer() {
     }
   }, [currentTrackIndex]);
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback((isAuto = false) => {
     if (isShuffle) {
       let nextIndex = Math.floor(Math.random() * PLAYLIST.length);
       if (nextIndex === currentTrackIndex && PLAYLIST.length > 1) {
@@ -176,22 +176,26 @@ export function AudioPlayer() {
       }
       setCurrentTrackIndex(nextIndex);
     } else {
-      setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length);
+      if (isAuto === true && repeatMode === 0 && currentTrackIndex === PLAYLIST.length - 1) {
+        setIsPlaying(false);
+        waveSurferRef.current?.seekTo(0);
+      } else {
+        setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length);
+        setIsPlaying(true);
+      }
     }
-  }, [isShuffle, currentTrackIndex]);
+  }, [isShuffle, currentTrackIndex, repeatMode]);
 
   useEffect(() => {
     const ws = waveSurferRef.current;
     if (!ws) return;
 
     const onFinish = () => {
-      if (isRepeat) {
+      if (repeatMode === 2) {
+        ws.seekTo(0);
         ws.play();
       } else {
-        handleNext();
-        if (!isPlaying) {
-          setIsPlaying(true);
-        }
+        handleNext(true);
       }
     };
 
@@ -199,7 +203,7 @@ export function AudioPlayer() {
     return () => {
       ws.un("finish", onFinish);
     };
-  }, [isRepeat, isShuffle, currentTrackIndex, handleNext, isPlaying]);
+  }, [repeatMode, isShuffle, currentTrackIndex, handleNext]);
 
   const togglePlay = () => {
     waveSurferRef.current?.playPause();
@@ -221,7 +225,7 @@ export function AudioPlayer() {
     }
   };
 
-  const toggleRepeat = () => setIsRepeat(!isRepeat);
+  const toggleRepeat = () => setRepeatMode((prev) => (prev + 1) % 3);
   const toggleShuffle = () => setIsShuffle(!isShuffle);
   const togglePlaylist = () => setShowPlaylist(!showPlaylist);
 
@@ -350,8 +354,16 @@ export function AudioPlayer() {
                 </div>
               </motion.button>
               
-              <button onClick={handleNext} className="text-white/80 hover:text-white transition-colors"><SkipForward className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /></button>
-              <button onClick={toggleRepeat} className={`transition-colors hidden md:block ${isRepeat ? 'text-brand-accent' : 'text-white/40 hover:text-white'}`}><Repeat className="w-4 h-4" /></button>
+              <button onClick={() => handleNext(false)} className="text-white/80 hover:text-white transition-colors"><SkipForward className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /></button>
+              <button 
+                onClick={toggleRepeat} 
+                className={`transition-colors hidden md:flex relative items-center justify-center ${repeatMode > 0 ? 'text-brand-accent' : 'text-white/40 hover:text-white'}`}
+              >
+                <Repeat className="w-4 h-4" />
+                {repeatMode === 2 && (
+                  <span className="absolute -top-1.5 -right-1.5 text-[8px] font-black bg-[#051810] text-brand-accent rounded-full w-3.5 h-3.5 flex items-center justify-center border border-brand-accent/50">1</span>
+                )}
+              </button>
             </div>
 
             <div className="hidden lg:flex flex-grow items-center gap-4 px-6 max-w-2xl mx-auto w-full min-w-[200px]">
