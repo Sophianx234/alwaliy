@@ -13,7 +13,7 @@ import { AudioPlayer } from "@/components/audio-player";
 
 export default function Home() {
   return (
-      <main className="pb-[90px]">
+      <main>
       <HeroCarousel/>
       <Banner/>
       <FeaturesGrid/>

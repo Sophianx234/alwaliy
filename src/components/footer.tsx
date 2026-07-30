@@ -1,6 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
+interface Dot {
+  id: number;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  size: number;
+  duration: number;
+  delay: number;
+}
 
 const Facebook = (props: any) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -30,15 +45,56 @@ const Youtube = (props: any) => (
 );
 
 export function Footer() {
-  return (
-    <>
-    <div className="w-full relative h-[13rem] bg-brand-accent ">
-      <div className="absolute inset-0 z-0 -bottom-15.5">
+  const [bannerDots, setBannerDots] = useState<Dot[]>([]);
 
-      <Image src="/imgs/bi-3.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain" />
+  useEffect(() => {
+    const newDots = Array.from({ length: 45 }).map((_, i) => ({
+      id: i,
+      startX: Math.random() * 100,
+      startY: Math.random() * 100,
+      endX: (Math.random() - 0.5) * 250,
+      endY: -(Math.random() * 250 + 100),
+      size: Math.random() * 3 + 2,
+      duration: Math.random() * 6 + 4,
+      delay: Math.random() * 5,
+    }));
+    setBannerDots(newDots);
+  }, []);
+
+  return (
+    <div className="">
+    {/* Footer Banner */}
+    <div className="w-full relative  h-[13rem] bg-brand-accent">
+      {/* Floating Dots Background */}
+      {bannerDots.map((dot) => (
+        <motion.div
+          key={dot.id}
+          className="absolute bg-white/70 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)] z-0 pointer-events-none"
+          style={{
+            left: `${dot.startX}%`,
+            top: `${dot.startY}%`,
+            width: dot.size,
+            height: dot.size,
+          }}
+          animate={{
+            x: [0, dot.endX],
+            y: [0, dot.endY],
+            opacity: [0, 1, 0],
+            scale: [0.5, 1.2, 0.5],
+          }}
+          transition={{
+            duration: dot.duration,
+            repeat: Infinity,
+            delay: dot.delay,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+      <div className="absolute  inset-0 z-10 -bottom-15.5 pointer-events-none">
+        <Image src="/imgs/bi-3.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain" />
       </div>
     </div>
-    <footer className="w-full bg-brand-darkest font-sans pt-20 pb-10 px-6 border-t border-white/5">
+    <footer className="w-full bg-brand-darkest font-sans pt-20 m pb-6 px-6 border-t border-white/5">
       <div className="max-w-[1400px] mx-auto flex flex-col">
         
         {/* Call to Action / Top Section */}
@@ -146,7 +202,7 @@ export function Footer() {
 
       </div>
     </footer>
-    </>
+    </div>
 
   );
 }

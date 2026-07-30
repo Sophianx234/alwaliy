@@ -1,6 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+interface Dot {
+  id: number;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  size: number;
+  duration: number;
+  delay: number;
+}
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -36,6 +47,21 @@ const testimonials = [
 export function TestimonialSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [bannerDots, setBannerDots] = useState<Dot[]>([]);
+
+  useEffect(() => {
+    const newDots = Array.from({ length: 45 }).map((_, i) => ({
+      id: i,
+      startX: Math.random() * 100,
+      startY: Math.random() * 100,
+      endX: (Math.random() - 0.5) * 250,
+      endY: -(Math.random() * 250 + 100),
+      size: Math.random() * 3 + 2,
+      duration: Math.random() * 6 + 4,
+      delay: Math.random() * 5,
+    }));
+    setBannerDots(newDots);
+  }, []);
 
   const handleNext = () => {
     setDirection(1);
@@ -56,9 +82,35 @@ export function TestimonialSection() {
 
   return (
     <>
-     <div className="w-full relative h-[13rem] bg-brand-accent ">
-           <Image src="/imgs/bi-2.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain" />
-         </div>
+    {/* Testimonial Banner */}
+     <div className="w-full relative h-[13rem] overflow-x-hidden bg-brand-accent ">
+       {/* Floating Dots Background */}
+       {bannerDots.map((dot) => (
+         <motion.div
+           key={dot.id}
+           className="absolute bg-white/70 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)] z-0 pointer-events-none"
+           style={{
+             left: `${dot.startX}%`,
+             top: `${dot.startY}%`,
+             width: dot.size,
+             height: dot.size,
+           }}
+           animate={{
+             x: [0, dot.endX],
+             y: [0, dot.endY],
+             opacity: [0, 1, 0],
+             scale: [0.5, 1.2, 0.5],
+           }}
+           transition={{
+             duration: dot.duration,
+             repeat: Infinity,
+             delay: dot.delay,
+             ease: "easeInOut",
+           }}
+         />
+       ))}
+       <Image src="/imgs/bi-2.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain pointer-events-none z-10" />
+     </div>
     <section className="w-full py-12 md:py-16 px-4 bg-brand-darkest font-sans relative overflow-hidden flex flex-col items-center justify-center min-h-[500px]">
       {/* Header Area */}
       <div className="relative flex flex-col items-center justify-center text-center w-full mb-12 mt-4">

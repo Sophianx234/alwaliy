@@ -36,7 +36,7 @@ export default function RootLayout({
       className={`${inter.variable} ${cormorant.variable} ${amiri.variable} h-full`}
     >
     <Navbar />
-      <body className="font-sans antialiased bg-brand-primary text-brand-text-light min-h-full flex flex-col">
+      <body className="font-sans antialiased bg-brand-primary text-brand-text-light min-h-full flex flex-col overflow-x-clip ">
         {children}
       </body>
     </html>

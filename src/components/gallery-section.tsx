@@ -1,6 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+interface Dot {
+  id: number;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  size: number;
+  duration: number;
+  delay: number;
+}
 import { ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -31,6 +42,21 @@ const images = [
 export function GallerySection() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [visibleCount, setVisibleCount] = useState(12);
+  const [bannerDots, setBannerDots] = useState<Dot[]>([]);
+
+  useEffect(() => {
+    const newDots = Array.from({ length: 45 }).map((_, i) => ({
+      id: i,
+      startX: Math.random() * 100,
+      startY: Math.random() * 100,
+      endX: (Math.random() - 0.5) * 250,
+      endY: -(Math.random() * 250 + 100),
+      size: Math.random() * 3 + 2,
+      duration: Math.random() * 6 + 4,
+      delay: Math.random() * 5,
+    }));
+    setBannerDots(newDots);
+  }, []);
 
   const loadMore = () => {
     setVisibleCount((prev) => Math.min(prev + 12, images.length));
@@ -40,7 +66,33 @@ export function GallerySection() {
     <section className="w-full   md:pt-0  bg-[#fcfbf9] font-sans overflow-hidden">
       {/* Gallery Banner */}
       <div className="bg-brand-accent text-center text-lg relative">
-        <div className="w-full relative h-[8rem] flex items-center justify-center overflow-hidden">
+        <div className="w-full relative h-[8rem] flex items-center justify-center">
+          {/* Floating Dots Background */}
+          {bannerDots.map((dot) => (
+            <motion.div
+              key={dot.id}
+              className="absolute bg-white/70 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)] z-0 pointer-events-none"
+              style={{
+                left: `${dot.startX}%`,
+                top: `${dot.startY}%`,
+                width: dot.size,
+                height: dot.size,
+              }}
+              animate={{
+                x: [0, dot.endX],
+                y: [0, dot.endY],
+                opacity: [0, 1, 0],
+                scale: [0.5, 1.2, 0.5],
+              }}
+              transition={{
+                duration: dot.duration,
+                repeat: Infinity,
+                delay: dot.delay,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+
           {/* Ensure the text stays above the image */}
           
           <Image 
