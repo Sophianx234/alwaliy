@@ -11,18 +11,22 @@ const slides = [
   {
     id: 1,
     image: "/imgs/h-1.jpeg",
+    mobileImage: "/imgs/stock/y-1.jpeg",
   },
   {
     id: 2,
     image: "/imgs/h-1.jpeg",
+    mobileImage: "/imgs/stock/y-2.jpeg",
   },
   {
     id: 3,
     image: "/imgs/h-4.jpeg",
+    mobileImage: "/imgs/stock/y-3.jpeg",
   },
   {
     id: 4,
     image: "/imgs/h-2.jpeg",
+    mobileImage: "/imgs/stock/y-4.jpeg",
   },
   
   /* 
@@ -80,14 +84,25 @@ export function HeroCarousel() {
           <div key={slide.id} className="relative w-full h-full flex-shrink-0">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
+              {/* Desktop Image */}
               <Image
                 src={slide.image}
                 alt={`Hero Slide ${index + 1}`}
                 fill
                 priority={index === 0} // Only prioritize the first image for LCP
-                className="object-cover object-center"
+                className="hidden md:block object-cover object-center"
                 sizes="100vw"
                 quality={75} // Abiding by Next.js defaults mentioned in skill.md
+              />
+              {/* Mobile Image */}
+              <Image
+                src={slide.mobileImage}
+                alt={`Hero Slide ${index + 1} Mobile`}
+                fill
+                priority={index === 0}
+                className="block md:hidden object-cover object-center"
+                sizes="100vw"
+                quality={75}
               />
               {/* Dark Overlay for better text readability */}
               {/* <div className="absolute inset-0 bg-brand-darkest/60" /> */}
