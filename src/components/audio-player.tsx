@@ -77,6 +77,8 @@ const PLAYLIST = [
 export function AudioPlayer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
+  const playlistRef = useRef<HTMLDivElement>(null);
+  const playlistButtonRef = useRef<HTMLButtonElement>(null);
   
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -95,6 +97,25 @@ export function AudioPlayer() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
   });
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showPlaylist &&
+        playlistRef.current &&
+        !playlistRef.current.contains(event.target as Node) &&
+        playlistButtonRef.current &&
+        !playlistButtonRef.current.contains(event.target as Node)
+      ) {
+        setShowPlaylist(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showPlaylist]);
 
   const track = PLAYLIST[currentTrackIndex];
 
@@ -262,7 +283,7 @@ export function AudioPlayer() {
           
           {/* Playlist Popover */}
           {showPlaylist && (
-            <div className="absolute bottom-[100%] right-4 md:right-8 mb-4 w-72 md:w-80 bg-[#051810]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 transform transition-all">
+            <div ref={playlistRef} className="absolute bottom-[100%] right-4 md:right-8 mb-4 w-72 md:w-80 bg-[#051810]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 transform transition-all">
               <div className="p-4 border-b border-white/10">
                 <h3 className="text-white font-bold tracking-widest uppercase text-xs">Up Next</h3>
               </div>
@@ -341,7 +362,7 @@ export function AudioPlayer() {
 
             <div className="hidden md:flex items-center gap-6 flex-shrink-0 min-w-[120px] justify-end text-white/40">
               <button onClick={toggleMute} className="hover:text-white transition-colors">{isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}</button>
-              <button onClick={togglePlaylist} className={`transition-colors ${showPlaylist ? 'text-brand-accent' : 'hover:text-white'}`}><ListMusic className="w-5 h-5" /></button>
+              <button ref={playlistButtonRef} onClick={togglePlaylist} className={`transition-colors ${showPlaylist ? 'text-brand-accent' : 'hover:text-white'}`}><ListMusic className="w-5 h-5" /></button>
             </div>
           </div>
         </div>

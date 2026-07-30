@@ -15,10 +15,26 @@ const images = [
   { src: "/imgs/stock/y-7.jpeg", alt: "Gallery image 7" },
   { src: "/imgs/stock/y-8.jpeg", alt: "Gallery image 8" },
   { src: "/imgs/stock/y-9.jpeg", alt: "Gallery image 9" },
+  { src: "/imgs/stock/y-10.jpg", alt: "Gallery image 10" },
+  { src: "/imgs/stock/y-11.jpg", alt: "Gallery image 11" },
+  { src: "/imgs/stock/y-12.jpg", alt: "Gallery image 12" },
+  { src: "/imgs/stock/y-13.jpg", alt: "Gallery image 13" },
+  { src: "/imgs/stock/y-14.jpg", alt: "Gallery image 14" },
+  { src: "/imgs/stock/y-15.jpg", alt: "Gallery image 15" },
+  { src: "/imgs/stock/y-16.jpg", alt: "Gallery image 16" },
+  { src: "/imgs/stock/y-17.jpg", alt: "Gallery image 17" },
+  { src: "/imgs/stock/y-18.jpg", alt: "Gallery image 18" },
+  { src: "/imgs/stock/y-19.jpg", alt: "Gallery image 19" },
+  { src: "/imgs/stock/y-20.jpg", alt: "Gallery image 20" },
 ];
 
 export function GallerySection() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [visibleCount, setVisibleCount] = useState(12);
+
+  const loadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 12, images.length));
+  };
 
   return (
     <section className="w-full   md:pt-0  bg-[#fcfbf9] font-sans overflow-hidden">
@@ -44,7 +60,7 @@ export function GallerySection() {
 
         {/* Unsplash-style Masonry Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-2 space-y-2">
-          {images.map((img, i) => (
+          {images.slice(0, visibleCount).map((img, i) => (
             <div 
               key={i} 
               onClick={() => setSelectedIndex(i)}
@@ -71,11 +87,17 @@ export function GallerySection() {
           ))}
         </div>
         
-        {/* Mobile View Archive Button */}
-        <button className="group flex md:hidden items-center justify-center gap-3 text-brand-darkest font-bold uppercase tracking-widest text-sm hover:text-brand-accent transition-colors pt-4">
-          <span>View Full Archive</span>
-          <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-        </button>
+        {/* Load More Button */}
+        {visibleCount < images.length && (
+          <div className="flex justify-center pt-8">
+            <button 
+              onClick={loadMore}
+              className="group flex items-center justify-center gap-3 bg-brand-accent text-brand-darkest font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-lg shadow-md hover:shadow-lg  active:scale-95 transition-all"
+            >
+              <span>Load More</span>
+            </button>
+          </div>
+        )}
 
       </div>
 
