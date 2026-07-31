@@ -361,14 +361,9 @@ export function AudioPlayer() {
               
               {isLoading ? (
                 <motion.div
-                  animate={{
-                    width: isScrolled ? 44 : 56,
-                    height: isScrolled ? 44 : 56,
-                  }}
-                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                  className="flex items-center justify-center rounded-full bg-brand-accent/10 border border-brand-accent/30 shadow-[0_0_15px_rgba(200,138,88,0.2)]"
+                  className="flex items-center justify-center "
                 >
-                  <Loader2 className="w-5 h-5 md:w-6 md:h-6 animate-spin text-brand-accent" />
+                  <Loader2 className="w-6 h-6 md:w-10 md:h-10 animate-spin text-white" />
                 </motion.div>
               ) : (
                 <motion.button 
@@ -380,8 +375,8 @@ export function AudioPlayer() {
                   transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                   className="flex items-center justify-center bg-white text-brand-darkest rounded-full group shadow-lg"
                 >
-                  <div className="group-hover:scale-105 group-active:scale-95 transition-transform flex items-center justify-center w-full h-full">
-                    {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" /> : <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />}
+                  <div className="group-hover:scale-105  transition-transform flex items-center justify-center w-full h-full">
+                    {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" /> : <Play className="w-4 h-4 md:w-6 md:h-5 " fill="currentColor" />}
                   </div>
                 </motion.button>
               )}
