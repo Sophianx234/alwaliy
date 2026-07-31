@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import WaveSurfer from "wavesurfer.js";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, ListMusic, Shuffle, Repeat, X, Disc, ChevronDown } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, ListMusic, Shuffle, Repeat, X, Disc, ChevronDown, Loader2 } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
 const PLAYLIST = [
@@ -82,6 +82,7 @@ export function AudioPlayer() {
   
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState("00:00");
   const [duration, setDuration] = useState("00:00");
   
@@ -147,6 +148,7 @@ export function AudioPlayer() {
       setCurrentTime(formatTime(ws.getCurrentTime()));
     });
     ws.on("ready", () => {
+      setIsLoading(false);
       setDuration(formatTime(ws.getDuration()));
     });
 
@@ -158,6 +160,7 @@ export function AudioPlayer() {
   useEffect(() => {
     const ws = waveSurferRef.current;
     if (ws) {
+      setIsLoading(true);
       const bypassUrl = `${PLAYLIST[currentTrackIndex].url}?play=1`;
       ws.load(bypassUrl);
       if (isPlaying) {
@@ -206,6 +209,7 @@ export function AudioPlayer() {
   }, [repeatMode, isShuffle, currentTrackIndex, handleNext]);
 
   const togglePlay = () => {
+    if (isLoading) return;
     waveSurferRef.current?.playPause();
   };
 
@@ -250,10 +254,12 @@ export function AudioPlayer() {
             className="pointer-events-auto absolute bottom-6 left-6 p-4 bg-brand-accent text-brand-darkest rounded-full  border border-white/20 hover:scale-105 active:scale-95 transition-transform z-50 group"
             title="Expand Player"
           >
-            {isPlaying ? (
+            {isLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin text-brand-darkest" />
+            ) : isPlaying ? (
               <Disc className="w-4 h-4 animate-[spin_3s_linear_infinite]" />
             ) : (
-              <Play className="w-4 h-4 " />
+              <Play className="w-4 h-4 ml-0.5" />
             )}
           </motion.button>
         )}
@@ -291,7 +297,7 @@ export function AudioPlayer() {
               <div className="p-4 border-b border-white/10 shrink-0">
                 <h3 className="text-white font-bold tracking-widest uppercase text-xs">Up Next</h3>
               </div>
-              <div data-lenis-prevent="true" className="max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <div className="max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {PLAYLIST.map((item, idx) => (
                   <div 
                     key={idx} 
@@ -353,7 +359,13 @@ export function AudioPlayer() {
                 className="flex items-center justify-center bg-white text-brand-darkest rounded-full  group"
               >
                 <div className="group-hover:scale-105 group-active:scale-95 transition-transform flex items-center justify-center w-full h-full">
-                  {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" /> : <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />}
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin text-brand-accent" />
+                  ) : isPlaying ? (
+                    <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" />
+                  ) : (
+                    <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />
+                  )}
                 </div>
               </motion.button>
               

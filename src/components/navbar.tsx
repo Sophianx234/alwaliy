@@ -160,9 +160,9 @@ export function Navbar() {
             <Image 
               src="/imgs/logo.png" 
               alt="Logo" 
-              width={80} 
-              height={80} 
-              className="w-14 h-auto object-contain"
+              width={100} 
+              height={100} 
+              className="max-w-24 h-auto object-contain"
             />
           </Link>
           
