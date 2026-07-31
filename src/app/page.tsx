@@ -11,7 +11,9 @@ import { TestimonialSection } from "@/components/testimonials-section";
 import { Footer } from "@/components/footer";
 import { AudioPlayer } from "@/components/audio-player";
 
-export default function Home() {
+export default async function Home() {
+  // Artificial 10-minute delay to view the loading screen
+  await new Promise((resolve) => setTimeout(resolve, 600000));
   return (
       <main>
       <HeroCarousel/>
