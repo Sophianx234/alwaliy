@@ -68,11 +68,11 @@ export default function Loading() {
               ))}
         
               <motion.div 
-                className="absolute inset-0 z-10 -bottom-11 pointer-events-none"
+                className="absolute inset-x-0 bottom-[-2.75rem] z-10 pointer-events-none flex justify-center"
                 animate={{ opacity: [0.3, 0.85, 0.3] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Image src="/imgs/mosque.png" alt="Banner Mosque" fill className="w-full h-auto object-contain object-bottom" />
+                <Image src="/imgs/mosque.png" alt="Banner Mosque" width={300} height={200} className="w-80 h-auto object-contain object-bottom" />
               </motion.div>
 
       </motion.div>
