@@ -245,23 +245,33 @@ export function AudioPlayer() {
       {/* Floating Mini Player Button (Shows when collapsed) */}
       <AnimatePresence>
         {!isExpanded && (
-          <motion.button
-            initial={{ opacity: 0, x: -50, scale: 0.5 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -50, scale: 0.5 }}
-            transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
-            onClick={() => setIsExpanded(true)}
-            className="pointer-events-auto absolute bottom-6 left-6 p-4 bg-brand-accent text-brand-darkest rounded-full  border border-white/20 hover:scale-105 active:scale-95 transition-transform z-50 group"
-            title="Expand Player"
-          >
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin text-brand-darkest" />
-            ) : isPlaying ? (
-              <Disc className="w-4 h-4 animate-[spin_3s_linear_infinite]" />
-            ) : (
-              <Play className="w-4 h-4 ml-0.5" />
-            )}
-          </motion.button>
+          isLoading ? (
+            <motion.div
+              initial={{ opacity: 0, x: -50, scale: 0.5 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -50, scale: 0.5 }}
+              transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
+              className="pointer-events-auto absolute bottom-6 left-6 p-4 bg-[#051810]/80 backdrop-blur-md border border-brand-accent/30 rounded-full z-50 flex items-center justify-center w-14 h-14"
+            >
+              <Loader2 className="w-5 h-5 animate-spin text-brand-accent" />
+            </motion.div>
+          ) : (
+            <motion.button
+              initial={{ opacity: 0, x: -50, scale: 0.5 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -50, scale: 0.5 }}
+              transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
+              onClick={() => setIsExpanded(true)}
+              className="pointer-events-auto absolute bottom-6 left-6 p-4 bg-brand-accent text-brand-darkest rounded-full border border-white/20 hover:scale-105 active:scale-95 transition-transform z-50 group flex items-center justify-center w-14 h-14"
+              title="Expand Player"
+            >
+              {isPlaying ? (
+                <Disc className="w-5 h-5 animate-[spin_3s_linear_infinite]" />
+              ) : (
+                <Play className="w-5 h-5 ml-0.5" />
+              )}
+            </motion.button>
+          )
         )}
       </AnimatePresence>
 
@@ -349,25 +359,32 @@ export function AudioPlayer() {
               <button onClick={toggleShuffle} className={`transition-colors hidden md:block ${isShuffle ? 'text-brand-accent' : 'text-white/40 hover:text-white'}`}><Shuffle className="w-4 h-4" /></button>
               <button onClick={handlePrev} className="text-white/80 hover:text-white transition-colors"><SkipBack className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /></button>
               
-              <motion.button 
-                onClick={togglePlay} 
-                animate={{
-                  width: isScrolled ? 44 : 56,
-                  height: isScrolled ? 44 : 56,
-                }}
-                transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                className="flex items-center justify-center bg-white text-brand-darkest rounded-full  group"
-              >
-                <div className="group-hover:scale-105 group-active:scale-95 transition-transform flex items-center justify-center w-full h-full">
-                  {isLoading ? (
-                    <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin text-brand-accent" />
-                  ) : isPlaying ? (
-                    <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" />
-                  ) : (
-                    <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />
-                  )}
-                </div>
-              </motion.button>
+              {isLoading ? (
+                <motion.div
+                  animate={{
+                    width: isScrolled ? 44 : 56,
+                    height: isScrolled ? 44 : 56,
+                  }}
+                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                  className="flex items-center justify-center rounded-full bg-brand-accent/10 border border-brand-accent/30 shadow-[0_0_15px_rgba(200,138,88,0.2)]"
+                >
+                  <Loader2 className="w-5 h-5 md:w-6 md:h-6 animate-spin text-brand-accent" />
+                </motion.div>
+              ) : (
+                <motion.button 
+                  onClick={togglePlay} 
+                  animate={{
+                    width: isScrolled ? 44 : 56,
+                    height: isScrolled ? 44 : 56,
+                  }}
+                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                  className="flex items-center justify-center bg-white text-brand-darkest rounded-full group shadow-lg"
+                >
+                  <div className="group-hover:scale-105 group-active:scale-95 transition-transform flex items-center justify-center w-full h-full">
+                    {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" /> : <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" fill="currentColor" />}
+                  </div>
+                </motion.button>
+              )}
               
               <button onClick={() => handleNext(false)} className="text-white/80 hover:text-white transition-colors"><SkipForward className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /></button>
               <button 
