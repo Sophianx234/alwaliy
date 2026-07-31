@@ -39,13 +39,13 @@ export default function Loading() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative flex flex-col items-center justify-center w-full h-full"
+        className="relative flex flex-col  items-center justify-center w-full h-full"
       >
         
               {dots.map((dot) => (
                 <motion.div
                   key={dot.id}
-                  className="absolute bg-white/70 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)] z-0"
+                  className="absolute bg-white/70  rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)] z-0"
                   style={{
                     left: `${dot.startX}%`,
                     top: `${dot.startY}%`,
@@ -67,9 +67,13 @@ export default function Loading() {
                 />
               ))}
         
-              <div className=" inset-0 z-10 -bottom-11 pointer-events-none">
-                <Image src="/imgs/mosque.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain object-bottom" />
-              </div>
+              <motion.div 
+                className="absolute inset-0 z-10 -bottom-11 pointer-events-none"
+                animate={{ opacity: [0.3, 0.85, 0.3] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Image src="/imgs/mosque.png" alt="Banner Mosque" fill className="w-full h-auto object-contain object-bottom" />
+              </motion.div>
 
       </motion.div>
     </div>
