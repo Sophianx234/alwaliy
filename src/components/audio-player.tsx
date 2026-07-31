@@ -295,10 +295,10 @@ export function AudioPlayer() {
           {/* Close Button */}
           <button 
             onClick={() => setIsExpanded(false)}
-            className="absolute -top-12 right-4 md:top-1/2 md:-translate-y-1/2 md:right-4 w-10 h-10 bg-[#051810]/80 backdrop-blur-md md:bg-transparent border border-white/10 md:border-none shadow-lg md:shadow-none rounded-full flex items-center justify-center text-white/60 md:text-white/40 hover:text-white hover:bg-white/10 transition-all z-50"
+            className="absolute -top-10 right-2 md:top-1/2 md:-translate-y-1/2 md:right-4 w-8 h-8 bg-[#051810]/80 backdrop-blur-md md:bg-transparent border border-white/10 md:border-none shadow-lg md:shadow-none rounded-full flex items-center justify-center text-white/60 md:text-white/40 hover:text-white md:hover:bg-white/10 transition-all z-50"
             title="Collapse Player"
           >
-            <X className="w-5 h-5 md:w-6 md:h-6" />
+            <X className="w-4 h-4 md:w-6 md:h-6" />
           </button>
           
           {/* Playlist Popover */}
