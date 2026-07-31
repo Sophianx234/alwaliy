@@ -39,7 +39,7 @@ export default function Loading() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative flex flex-col items-center justify-center"
+        className="relative flex flex-col items-center justify-center w-full h-full"
       >
         
               {dots.map((dot) => (
@@ -67,8 +67,8 @@ export default function Loading() {
                 />
               ))}
         
-              <div className="absolute inset-0 z-10 -bottom-11 pointer-events-none">
-                <Image src="/imgs/mosque.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain" />
+              <div className=" inset-0 z-10 -bottom-11 pointer-events-none">
+                <Image src="/imgs/mosque.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain object-bottom" />
               </div>
 
       </motion.div>
