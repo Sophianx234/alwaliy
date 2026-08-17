@@ -3,6 +3,7 @@ import { Inter, Cormorant_Garamond, Amiri } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { SmoothScrolling } from "@/components/smooth-scrolling";
+import { SplashScreen } from "@/components/splash-screen";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,8 +37,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${cormorant.variable} ${amiri.variable}`}
     >
-    <Navbar />
       <body className="font-sans antialiased bg-brand-primary text-brand-text-light flex flex-col overflow-x-clip ">
+        <SplashScreen />
+        <Navbar />
         <SmoothScrolling>
           {children}
         </SmoothScrolling>
