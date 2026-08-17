@@ -35,9 +35,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorant.variable} ${amiri.variable}`}
+      className={`${inter.variable} ${cormorant.variable} ${amiri.variable} overflow-x-hidden`}
     >
-      <body className="font-sans antialiased bg-brand-primary text-brand-text-light flex flex-col overflow-x-clip ">
+      <body className="font-sans antialiased bg-brand-primary text-brand-text-light flex flex-col overflow-x-hidden ">
         <SplashScreen />
         <Navbar />
         <SmoothScrolling>

@@ -64,7 +64,7 @@ export function Footer() {
   return (
     <div className="">
     {/* Footer Banner */}
-    <div className="w-full relative  h-[13rem] bg-brand-accent">
+    <div className="w-full relative h-[13rem] bg-brand-accent overflow-hidden">
       {/* Floating Dots Background */}
       {bannerDots.map((dot) => (
         <motion.div
