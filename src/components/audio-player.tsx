@@ -7,61 +7,61 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 
 const PLAYLIST = [
   {
-    title: "Yakub Recitation 1",
+    title: "Recitation 1",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-1.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 2",
+    title: "Recitation 2",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-2.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 3",
+    title: "Recitation 3",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-3.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 4",
+    title: "Recitation 4",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-4.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 5",
+    title: "Recitation 5",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-5.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 6",
+    title: "Recitation 6",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-6.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 7",
+    title: "Recitation 7",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-7.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 8",
+    title: "Recitation 8",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-8.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 9",
+    title: "Recitation 9",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-9.mp3",
     image: "/imgs/h-2.jpeg"
   },
   {
-    title: "Yakub Recitation 10",
+    title: "Recitation 10",
     artist: "Beautiful Recitation",
     url: "/audios/yakub-10.mp3",
     image: "/imgs/h-2.jpeg"
