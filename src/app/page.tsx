@@ -21,8 +21,8 @@ export default function Home() {
       <AboutSection/>
       <SecondaryBanner/>
       <FeaturedRecitation/>
-      <GallerySection/>
       <CoursesSection/>
+      <GallerySection/>
       <TestimonialSection/>
       <Footer/>
       <AudioPlayer/>

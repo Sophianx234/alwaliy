@@ -94,7 +94,7 @@ export function GallerySection() {
   };
 
   return (
-    <section className="w-full   md:pt-0  bg-[#fcfbf9] font-sans overflow-hidden">
+    <section id="gallery" className="w-full mb-10 md:pt-0 bg-[#fcfbf9] font-sans overflow-hidden scroll-mt-24">
       {/* Gallery Banner */}
       <div className="bg-brand-accent text-center text-lg relative">
         <div className="w-full relative h-[8rem] flex items-center justify-center">

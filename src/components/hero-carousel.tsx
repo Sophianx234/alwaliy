@@ -74,7 +74,7 @@ export function HeroCarousel() {
   }, [nextSlide, currentSlide]);
 
   return (
-    <div className="relative w-full h-[600px] lg:h-[350px] overflow-hidden  font-sans">
+    <div id="home" className="relative w-full h-[600px] lg:h-[350px] overflow-hidden font-sans scroll-mt-28">
       {/* Slides Container */}
       <div 
         className="flex w-full h-full transition-transform duration-700 ease-in-out"

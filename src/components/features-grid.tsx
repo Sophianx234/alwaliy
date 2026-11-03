@@ -1,64 +1,58 @@
 import Link from "next/link";
-import { Wheat, Backpack, BriefcaseMedical, Droplet, HeartHandshake, Tent } from "lucide-react";
+import { Headphones, BookOpen, GraduationCap, Compass, UserCheck, CalendarCheck } from "lucide-react";
 
 // This accent splash creates the duotone/offset aesthetic seen in the reference image
 // We use the project's brand-accent color to match the yellow/gold theme from the image
-const AccentSplash = () => (
-  <svg 
-    className="absolute -right-1 -top-1 w-7 h-7 text-brand-accent/90 z-0 transform rotate-12" 
-    viewBox="0 0 100 100" 
-    xmlns="http://www.w3.org/2000/svg"
+const AccentSplash = ({children}: {children: React.ReactNode}) => (
+  <div 
+    className="  p-2 px-3 bg-brand-accent/90 flex items-center justify-center"
   >
-    <path 
-      fill="currentColor" 
-      d="M45.7,-76.4C58.9,-69.2,69.2,-55.3,77.4,-40.4C85.6,-25.5,91.7,-9.6,90.4,5.9C89.1,21.4,80.4,36.5,70,49.1C59.6,61.7,47.5,71.8,33.5,78.2C19.5,84.6,3.6,87.3,-11.1,84.5C-25.8,81.7,-39.3,73.4,-51.2,63.1C-63.1,52.8,-73.4,40.5,-79.8,26.2C-86.2,11.9,-88.7,-4.4,-84.6,-19.1C-80.5,-33.8,-69.8,-46.9,-56.6,-54.6C-43.4,-62.3,-27.7,-64.6,-13.2,-68.9C1.3,-73.2,16.8,-79.5,32.5,-83.6C48.2,-87.7,64.1,-89.6,45.7,-76.4Z" 
-      transform="translate(50 50)" 
-    />
-  </svg>
+   {children}
+  </div>
 );
 
 const features = [
   {
-    icon: <Wheat className="w-9 h-9 text-brand-darkest relative z-10" strokeWidth={1.5} />,
-    title: "Healthy Food",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-    cta: "Make a donation",
-    href: "/donate"
+    icon: <Headphones className="w-9 h-9 text-[#2b3b34] relative z-10" strokeWidth={1.5} />,
+    title: "Quranic Recitations",
+    description: "Listen to soul-stirring Quranic recitations, Friday Khutbahs, and Taraweeh recordings live from Masjidul Bayaan, Tamale.",
+    cta: "Listen Now",
+    href: "#recitations"
   },
   {
-    icon: <Backpack className="w-9 h-9 text-brand-darkest relative z-10" strokeWidth={1.5} />,
-    title: "Education",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-    cta: "Make a donation",
-    href: "/donate"
+    icon: <BookOpen className="w-8 h-8 text-[#2b3b34] relative z-10" strokeWidth={1.5} />,
+    title: "Tajweed Mastery",
+    description: "Comprehensive instruction on articulation points (Makharij), characteristics of letters, and rhythm to perfect your recitation.",
+    cta: "View Courses",
+    href: "#courses"
   },
   {
-    icon: <BriefcaseMedical className="w-9 h-9 text-brand-darkest relative z-10" strokeWidth={1.5} />,
-    title: "Medical",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-    cta: "Make a donation",
-    href: "/donate"
+    icon: <GraduationCap className="w-9 h-9 text-[#2b3b34] relative z-10" strokeWidth={1.5} />,
+    title: "Hifdh & Revision",
+    description: "Structured Quran memorization schedules, retention techniques, and personalized follow-ups for students of all ages.",
+    cta: "Join Program",
+    href: "#courses"
   },
   {
-    icon: <Droplet className="w-9 h-9 text-brand-darkest relative z-10" strokeWidth={1.5} />,
-    title: "Pure Water",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-    cta: "Make a donation",
-    href: "/donate"
+    icon: <Compass className="w-9 h-9 text-[#2b3b34] relative z-10" strokeWidth={1.5} />,
+    title: "Imam & Taraweeh",
+    description: "Leading congregational prayers, Ramadan Taraweeh, and Tahajjud at Masjidul Bayaan with reverence and devotion.",
+    cta: "Learn More",
+    href: "#about"
   },
   {
-    icon: <HeartHandshake className="w-9 h-9 text-brand-darkest relative z-10" strokeWidth={1.5} />,
-    title: "Love & Care",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-    cta: "Learn & Participate",
-    href: "/participate"
+    icon: <UserCheck className="w-9 h-9 text-[#2b3b34] relative z-10" strokeWidth={1.5} />,
+    title: "One-on-One Mentorship",
+    description: "In person mentorship and recitation correction sessions following traditional teacher-to-student oral transmission (Talaqqi).",
+    cta: "Book a Session",
+    href: "#contact"
   },
   {
-    icon: <Tent className="w-9 h-9 text-brand-darkest relative z-10" strokeWidth={1.5} />,
-    title: "Travel Activities",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-    cta: "Make a donation",
-    href: "/donate"
+    icon: <CalendarCheck className="w-9 h-9 text-[#2b3b34] relative z-10" strokeWidth={1.5} />,
+    title: "Event & Ceremony Bookings",
+    description: "Available for Quran conferences, graduation ceremonies, inter-school competitions, and Islamic seminars.",
+    cta: "Request Booking",
+    href: "#contact"
   }
 ];
 
@@ -91,11 +85,13 @@ export function FeaturesGrid() {
               >
                 {/* Icon Wrapper matching the special internet icons aesthetic */}
                 <div className="relative mb-6">
-                  <AccentSplash />
+                  <AccentSplash>
+
                   {feature.icon}
+                  </AccentSplash>
                 </div>
 
-                <h3 className="text-2xl font-bold text-brand-darkest mb-4 font-serif tracking-tight">
+                <h3 className="text-2xl font-bold text-[#2b3b34] mb-4 font-serif tracking-tight">
                   {feature.title}
                 </h3>
                 

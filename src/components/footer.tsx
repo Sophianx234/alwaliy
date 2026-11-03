@@ -94,7 +94,7 @@ export function Footer() {
         <Image src="/imgs/bi-3.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain" />
       </div>
     </div>
-    <footer className="w-full bg-brand-darkest font-sans pt-20 m pb-6 px-6 border-t border-white/5">
+    <footer id="contact" className="w-full bg-brand-darkest font-sans pt-20 m pb-6 px-6 border-t border-white/5 scroll-mt-24">
       <div className="max-w-[1400px] mx-auto flex flex-col">
         
         {/* Call to Action / Top Section */}
