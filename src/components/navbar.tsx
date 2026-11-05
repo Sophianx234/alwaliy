@@ -97,28 +97,46 @@ export function Navbar() {
             
             {/* Extreme Left: Socials */}
             <div className="flex space-x-5">
-              <Link href="#" aria-label="TikTok" className="hover:text-brand-accent transition-colors">
+              <a 
+                href="https://www.tiktok.com/@yaqub_alwaliy" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="TikTok" 
+                className="hover:text-brand-accent transition-colors"
+              >
                 <TiktokIcon className="w-5 h-5" />
-              </Link>
-              <Link href="#" aria-label="Instagram" className="hover:text-brand-accent transition-colors">
+              </a>
+              <a 
+                href="https://www.instagram.com/yaqub_alwaliy" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Instagram" 
+                className="hover:text-brand-accent transition-colors"
+              >
                 <InstagramIcon className="w-5 h-5" />
-              </Link>
-              <Link href="#" aria-label="YouTube" className="hover:text-brand-accent transition-colors">
+              </a>
+              <a 
+                href="https://www.youtube.com/channel/UCLHtUNtO_mpI7q7dA3XRCmw" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="YouTube" 
+                className="hover:text-brand-accent transition-colors"
+              >
                 <YoutubeIcon className="w-[22px] h-[22px]" />
-              </Link>
+              </a>
             </div>
             
             {/* Left Inner: Navigation Links */}
             <div className="flex space-x-8 font-medium">
-              <Link href="/" className="hover:text-brand-accent transition-colors">Home</Link>
-              <Link href="/profile" className="hover:text-brand-accent transition-colors">Profile</Link>
-              <Link href="/recitations" className="hover:text-brand-accent transition-colors">Recitations</Link>
+              <a href="#home" className="hover:text-brand-accent transition-colors">Home</a>
+              <a href="#about" className="hover:text-brand-accent transition-colors">Profile</a>
+              <a href="#recitations" className="hover:text-brand-accent transition-colors">Recitations</a>
             </div>
           </div>
 
           {/* Center: Absolutely Positioned Logo */}
           <div className="absolute bg-transparent left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-            <Link href="/" className="pointer-events-auto block p-2 rounded-full">
+            <a href="#home" className="pointer-events-auto block p-2 rounded-full">
               <Image 
                 src="/imgs/logo.png" 
                 alt="Logo" 
@@ -128,7 +146,7 @@ export function Navbar() {
                 style={{ transform: isScrolled ? "scale(0.85)" : "scale(1)" }}
                 priority
               />
-            </Link>
+            </a>
           </div>
 
           {/* Right Side Container */}
@@ -136,9 +154,9 @@ export function Navbar() {
             
             {/* Right Inner: Navigation Links */}
             <div className="flex space-x-8 font-medium">
-              <Link href="/courses" className="hover:text-brand-accent transition-colors">Courses</Link>
-              <Link href="/contact" className="hover:text-brand-accent transition-colors">Contact</Link>
-              <Link href="/connections" className="hover:text-brand-accent transition-colors">Connections</Link>
+              <a href="#courses" className="hover:text-brand-accent transition-colors">Courses</a>
+              <a href="#gallery" className="hover:text-brand-accent transition-colors">Gallery</a>
+              <a href="#contact" className="hover:text-brand-accent transition-colors">Contact</a>
             </div>
 
             {/* Extreme Right: CTA */}
@@ -146,9 +164,9 @@ export function Navbar() {
               <Link href="#" className="text-brand-text-light hover:text-brand-accent transition-transform hover:scale-110" aria-label="Buy me a coffee">
                 <Coffee className="w-6 h-6" />
               </Link>
-              <button className="bg-brand-accent text-brand-darkest font-semibold px-7 py-2.5 rounded-lg hover:bg-opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-md">
+              <a href="#courses" className="bg-brand-accent text-brand-darkest font-semibold px-7 py-2.5 rounded-lg hover:bg-opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-md inline-block">
                 Register
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -189,34 +207,56 @@ export function Navbar() {
             
             {/* Mobile Links */}
             <div className="flex flex-col space-y-5 font-medium text-lg text-center">
-              <Link href="/" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-              <Link href="/profile" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Profile</Link>
-              <Link href="/recitations" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Recitations</Link>
-              <Link href="/courses" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Courses</Link>
-              <Link href="/contact" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
-              <Link href="/connections" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Connections</Link>
+              <a href="#home" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Home</a>
+              <a href="#about" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Profile</a>
+              <a href="#recitations" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Recitations</a>
+              <a href="#courses" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Courses</a>
+              <a href="#gallery" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Gallery</a>
+              <a href="#contact" className="hover:text-brand-accent transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
             </div>
             
             <hr className="border-white/10 border-t" />
             
             {/* Mobile Socials */}
             <div className="flex items-center space-x-6 justify-center">
-              <Link href="#" aria-label="TikTok" className="hover:text-brand-accent transition-colors">
+              <a 
+                href="https://www.tiktok.com/@yaqub_alwaliy" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="TikTok" 
+                className="hover:text-brand-accent transition-colors"
+              >
                 <TiktokIcon className="w-6 h-6" />
-              </Link>
-              <Link href="#" aria-label="Instagram" className="hover:text-brand-accent transition-colors">
+              </a>
+              <a 
+                href="https://www.instagram.com/yaqub_alwaliy" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Instagram" 
+                className="hover:text-brand-accent transition-colors"
+              >
                 <InstagramIcon className="w-6 h-6" />
-              </Link>
-              <Link href="#" aria-label="YouTube" className="hover:text-brand-accent transition-colors">
+              </a>
+              <a 
+                href="https://www.youtube.com/channel/UCLHtUNtO_mpI7q7dA3XRCmw" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="YouTube" 
+                className="hover:text-brand-accent transition-colors"
+              >
                 <YoutubeIcon className="w-[26px] h-[26px]" />
-              </Link>
+              </a>
             </div>
 
             {/* Mobile CTA */}
             <div className="flex items-center gap-4 mt-4 w-full">
-              <button className="flex-1 bg-brand-accent text-brand-darkest font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all text-center">
-                Register
-              </button>
+              <a 
+                href="#courses" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex-1 bg-brand-accent text-brand-darkest font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all text-center"
+              >
+                Enroll Now
+              </a>
             </div>
           </div>
         )}

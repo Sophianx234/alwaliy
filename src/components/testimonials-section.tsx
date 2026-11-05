@@ -16,31 +16,43 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
-const testimonials = [
+interface Testimonial {
+  name: string;
+  role: string;
+  avatar: string;
+  quote: string;
+}
+
+const testimonials: Testimonial[] = [
   {
-    name: "Ahmad R.",
-    role: "Hifz Student",
-    quote: "The Hifz program completely transformed my relationship with the Quran. The teachers are incredibly patient, and the structured approach made memorization feel beautiful and achievable."
+    name: "Abdul-Mumin Alhassan",
+    role: "Tajweed Mastery Student",
+    avatar: "https://images.unsplash.com/photo-1627062422492-d076f4b6793a?q=80&w=250&auto=format&fit=crop",
+    quote: "Studying the classical texts with Ustadh Ya'kub brought clarity to the nuances of Tajweed that I never understood before. His ear for recitation precision is remarkable."
   },
   {
-    name: "Fatima S.",
-    role: "Community Member",
-    quote: "Learning Seerah here wasn't just about historical facts; it was about connecting with the Prophet (ﷺ) on a deeply emotional and spiritual level. Truly life-changing."
+    name: "Dawuda Mariam ",
+    role: "Masjidul Bayaan Attendee",
+    avatar: "/imgs/stock/a-2.jpg",
+    quote: "Listening to Ustadh Ya'kub lead Taraweeh prayers in Tamale is deeply uplifting. His soothing voice and mastery of recitation bring the meanings of the Quran alive."
   },
   {
-    name: "Omar K.",
-    role: "Tajweed Student",
-    quote: "The Tajweed mastery course is exceptional. For years I struggled with my pronunciation, but the personalized guidance here helped me recite with confidence and peace."
+    name: "Haruna Adiza",
+    role: "Hifdh Program Student",
+    avatar: "/imgs/stock/a-3.jpg",
+    quote: "Starting my Quran memorisation journey under his mentorship gave me the discipline and daily structure I needed. His patience with students makes all the difference."
   },
   {
-    name: "Aisha M.",
-    role: "Arabic Student",
-    quote: "I never thought I could understand classical Arabic. The curriculum is brilliantly designed, making the language of the Quran accessible to everyone."
+    name: "Amina Suleman",
+    role: "Beginner Tajweed Student",
+    avatar: "/imgs/stock/a-1.jpg",
+    quote: "I started with very little confidence in my pronunciation. Through Ustadh Ya'kub's step-by-step guidance on Makharij, I can now recite smoothly with proper Tajweed."
   },
   {
-    name: "Zaid T.",
-    role: "Youth Program",
-    quote: "This community is exactly what I was looking for. A beautiful environment where we learn our deen while building lifelong, righteous friendships."
+    name: "Zubair Abu Bakr",
+    role: "Hafidh & Muraaja’ah Participant",
+    avatar: "https://images.unsplash.com/photo-1600019004973-c8067169a57b?q=80&w=250&auto=format&fit=crop",
+    quote: "After completing my Hifdh, I struggled to retain my revision consistently. The proven techniques in the Muraaja’ah sessions solidified my retention completely."
   }
 ];
 
@@ -121,16 +133,15 @@ export function TestimonialSection() {
        ))}
        <Image src="/imgs/bi-2.png" alt="Banner Mosque" fill className="w-full h-auto opacity-75 object-contain pointer-events-none z-10" />
      </div>
-    <section className="w-full py-12 md:py-16 px-4 bg-brand-darkest font-sans relative overflow-hidden flex flex-col items-center justify-center min-h-[500px]">
+    <section id="testimonials" className="w-full py-14 md:py-20 px-4 bg-brand-darkest font-sans relative overflow-hidden flex flex-col items-center justify-center min-h-[500px]">
       {/* Header Area */}
-      <div className="relative flex flex-col items-center justify-center text-center w-full mb-12 mt-4">
-        
-       
-
-        <div className="relative z-10 flex flex-col items-center space-y-2 mt-2">
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-            Testimonials
+      <div className="relative flex flex-col items-center justify-center text-center w-full mb-12 mt-2">
+        <div className="relative z-10 flex flex-col items-center space-y-2">
+          <span className="text-brand-accent uppercase tracking-[0.25em] text-xs font-semibold">
+            Community & Student Voices
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif font-bold text-white tracking-tight">
+            Reflections & Testimonials
           </h2>
         </div>
       </div>
@@ -187,7 +198,7 @@ export function TestimonialSection() {
                    {/* Avatar and Name row */}
                    <div className="flex items-center justify-center gap-4 mb-6">
                      <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-white/20">
-                       <img src="/imgs/h-2.jpeg" alt="Avatar" className="w-full h-full object-cover" />
+                       <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
                      </div>
                      <div className="flex flex-col items-start">
                        <h4 className="text-white font-bold text-[15px] leading-tight">{t.name}</h4>
